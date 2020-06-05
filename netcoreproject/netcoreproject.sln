@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29609.76
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "apple.web", "apple.web", "{C3146418-BC08-40E9-943B-96CB38E7CFF7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "apple.Libraries", "apple.Libraries", "{2095733D-51A1-405C-8548-E7BDEBF77EC3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "apple.api", "apple.api", "{3DC85046-1A9B-4671-90BE-2494209581F4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0apple.test", "0apple.test", "{0A8E8C63-E1F4-4D4B-924C-8BA314995A6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "apple.web.cms.quartz", "apple.web.cms.quartz\apple.web.cms.quartz.csproj", "{C66C7391-2519-497D-AF13-FF5F0C3AE232}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C66C7391-2519-497D-AF13-FF5F0C3AE232}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C66C7391-2519-497D-AF13-FF5F0C3AE232}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C66C7391-2519-497D-AF13-FF5F0C3AE232}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C66C7391-2519-497D-AF13-FF5F0C3AE232}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C66C7391-2519-497D-AF13-FF5F0C3AE232} = {C3146418-BC08-40E9-943B-96CB38E7CFF7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {64551657-2B03-4A42-A722-FEED6E2AB5C4}
+	EndGlobalSection
+EndGlobal
