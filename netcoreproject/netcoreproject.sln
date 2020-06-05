@@ -13,6 +13,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0apple.test", "0apple.test"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "apple.web.cms.quartz", "apple.web.cms.quartz\apple.web.cms.quartz.csproj", "{C66C7391-2519-497D-AF13-FF5F0C3AE232}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0apple.world", "0apple.world", "{B58A2005-6817-4F9D-A26E-0E0474F22C2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "onnote", "onnote\onnote.csproj", "{CF70E0C3-EFDE-4B29-95A4-835B614C48D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "apple.model", "apple.model\apple.model.csproj", "{4F952ED0-B717-4CAB-A385-BA0965C75B0B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "apple.orm", "apple.orm", "{C6A4C706-FA9B-48A2-9DA1-B565A8C1694A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "apple.data", "apple.data\apple.data.csproj", "{F0961D13-9577-4CB1-B0BF-F848216E2DE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "apple.Infrastructure", "apple.Infrastructure\apple.Infrastructure.csproj", "{0FC95817-072B-44B3-A058-A92392A80533}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "apple.test", "apple.test\apple.test.csproj", "{DB9373A6-A159-432A-AEA8-11068CD10B4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,12 +37,37 @@ Global
 		{C66C7391-2519-497D-AF13-FF5F0C3AE232}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C66C7391-2519-497D-AF13-FF5F0C3AE232}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C66C7391-2519-497D-AF13-FF5F0C3AE232}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF70E0C3-EFDE-4B29-95A4-835B614C48D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF70E0C3-EFDE-4B29-95A4-835B614C48D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF70E0C3-EFDE-4B29-95A4-835B614C48D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF70E0C3-EFDE-4B29-95A4-835B614C48D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F952ED0-B717-4CAB-A385-BA0965C75B0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F952ED0-B717-4CAB-A385-BA0965C75B0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F952ED0-B717-4CAB-A385-BA0965C75B0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F952ED0-B717-4CAB-A385-BA0965C75B0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0961D13-9577-4CB1-B0BF-F848216E2DE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0961D13-9577-4CB1-B0BF-F848216E2DE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0961D13-9577-4CB1-B0BF-F848216E2DE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0961D13-9577-4CB1-B0BF-F848216E2DE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FC95817-072B-44B3-A058-A92392A80533}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FC95817-072B-44B3-A058-A92392A80533}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FC95817-072B-44B3-A058-A92392A80533}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FC95817-072B-44B3-A058-A92392A80533}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB9373A6-A159-432A-AEA8-11068CD10B4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB9373A6-A159-432A-AEA8-11068CD10B4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB9373A6-A159-432A-AEA8-11068CD10B4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB9373A6-A159-432A-AEA8-11068CD10B4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C66C7391-2519-497D-AF13-FF5F0C3AE232} = {C3146418-BC08-40E9-943B-96CB38E7CFF7}
+		{CF70E0C3-EFDE-4B29-95A4-835B614C48D3} = {B58A2005-6817-4F9D-A26E-0E0474F22C2E}
+		{4F952ED0-B717-4CAB-A385-BA0965C75B0B} = {2095733D-51A1-405C-8548-E7BDEBF77EC3}
+		{F0961D13-9577-4CB1-B0BF-F848216E2DE5} = {C6A4C706-FA9B-48A2-9DA1-B565A8C1694A}
+		{0FC95817-072B-44B3-A058-A92392A80533} = {2095733D-51A1-405C-8548-E7BDEBF77EC3}
+		{DB9373A6-A159-432A-AEA8-11068CD10B4F} = {0A8E8C63-E1F4-4D4B-924C-8BA314995A6A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {64551657-2B03-4A42-A722-FEED6E2AB5C4}
