@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using apple.Infrastructure;
 using apple.data.Quartz;
+using apple.Infrastructure.quartz;
 
 namespace apple.test.quartz
 {
@@ -11,11 +12,7 @@ namespace apple.test.quartz
     {
         public void Log()
         {
-            var list = new QuatzjobRepostory().GetList();
-            foreach (var item in list)
-            {
-                Console.WriteLine(item.FullJobName);
-            }
+            
         }
 
         public void Log(string str)

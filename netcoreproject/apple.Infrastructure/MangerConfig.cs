@@ -21,7 +21,7 @@ namespace apple.Infrastructure
 
             Configuration = builder.Build();
             var one = Configuration.GetValue<List<ConfigQuartzCms>>("QuartzConfig:quartzs");
-            Configuration.Bind("QuartzConfig:quartzs", quartzconfig);
+            Configuration.Bind("QuartzConfig:quartzs", quartzlist);
         }
 
         #region 要绑定的参数
@@ -30,7 +30,7 @@ namespace apple.Infrastructure
 
         public static string sqlserverquartz => Configuration.GetConnectionString("sqlserverquartz");
 
-        public static List<ConfigQuartzCms> quartzconfig { get; } = new List<ConfigQuartzCms>();
+        public static List<ConfigQuartzCms> quartzlist { get; } = new List<ConfigQuartzCms>();
 
         public static bool IsUseproxy => ConvertBool("QuartzConfig:quartzaddress:IsUseproxy", "false");
 
@@ -41,7 +41,7 @@ namespace apple.Infrastructure
 
         public static string quartzport => Configuration["QuartzConfig:quartzaddress:port"];
 
-        public static string quazrbindName => Configuration["QuartzConfig:quartzaddress:bindName"];
+        public static string quartzbindName => Configuration["QuartzConfig:quartzaddress:bindName"];
 
 
 

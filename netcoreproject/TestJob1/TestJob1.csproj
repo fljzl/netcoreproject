@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\apple.data\apple.data.csproj" />
+    <ProjectReference Include="..\apple.Infrastructure\apple.Infrastructure.csproj" />
+    <ProjectReference Include="..\apple.model\apple.model.csproj" />
+  </ItemGroup>
+
+</Project>
