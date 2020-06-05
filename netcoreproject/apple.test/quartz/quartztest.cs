@@ -12,7 +12,13 @@ namespace apple.test.quartz
     {
         public void Log()
         {
-            
+            //var manger = new QuatzjobRepostory();
+            //var detail = manger.FindById(4);
+            ////int totals = 0;
+            ////var list = manger.GetListPage("", 1, 10, ref totals);
+            //manger.UpdateBackgroundJobStatus(detail.JobId, 3);
+            //detail = manger.FindById(4);
+            //manger.UpdateBackgroundJobStatus(detail.JobId, DateTime.Now, default(DateTime));
         }
 
         public void Log(string str)
