@@ -1,4 +1,6 @@
 ﻿using apple.data.Quartz;
+using apple.Infrastructure;
+using apple.model.quarzt;
 using Quartz;
 using System;
 using System.Threading;
@@ -8,18 +10,25 @@ namespace TaskMangerData
     public class MySchedulerListener : ISchedulerListener
     {
 
-        QuatzjobRepostory _quatzjobRepostory;
+        logMsgRepostory _logmsg;
         public MySchedulerListener()
         {
-            _quatzjobRepostory = new QuatzjobRepostory();
+            _logmsg = new logMsgRepostory();
         }
 
         public Task JobAdded(IJobDetail jobDetail, CancellationToken cancellationToken = default)
         {
             return Task.Factory.StartNew(() =>
             {
-
-                Console.WriteLine($"JobAdded");
+                var jobName = jobDetail.Key.Name;
+                var msg = $"jobName:{jobName},Job: {jobDetail.Key} Name=MySchedulerListener,JobAdded";
+                Singleton<MangerLog>.Instance.Error(msg);
+                Console.WriteLine(msg);
+                _logmsg.Insert(new logMsg
+                {
+                    JobName = jobName,
+                    Msg = msg
+                });
             });
         }
 
@@ -87,17 +96,22 @@ namespace TaskMangerData
             });
         }
 
-
-
-
-
-
-
-        public Task SchedulerError(string msg, SchedulerException cause, CancellationToken cancellationToken = default)
+        public Task SchedulerError(string msg, SchedulerException SchedulerError, CancellationToken cancellationToken = default)
         {
             return Task.Factory.StartNew(() =>
             {
-                Console.WriteLine($"SchedulerError");
+                var msglost = msg + SchedulerError.Message + SchedulerError.StackTrace;
+                foreach (var item in SchedulerError.Data)
+                {
+                    msglost += item.ToString();
+                }
+                Singleton<MangerLog>.Instance.Error(msglost);
+                Console.WriteLine(msg);
+                _logmsg.Insert(new logMsg
+                {
+                    JobName = "SchedulerError",
+                    Msg = msglost
+                });
             });
         }
 

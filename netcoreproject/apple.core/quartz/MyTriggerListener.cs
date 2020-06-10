@@ -1,4 +1,7 @@
-﻿using apple.data.Quartz;
+﻿using apple.core;
+using apple.data.Quartz;
+using apple.Infrastructure;
+using apple.model.quarzt;
 using Quartz;
 using System;
 using System.Collections.Generic;
@@ -10,59 +13,27 @@ namespace TaskMangerData
 {
     public class MyTriggerListener : ITriggerListener
     {
-        QuatzjobRepostory _quatzjobRepostory;
+        logMsgRepostory _logmsg;
         public MyTriggerListener()
         {
-            _quatzjobRepostory = new QuatzjobRepostory();
+            _logmsg = new logMsgRepostory();
         }
+
         public string Name { get; } = nameof(MyTriggerListener);
 
         public Task TriggerComplete(ITrigger trigger, IJobExecutionContext context, SchedulerInstruction triggerInstructionCode, CancellationToken cancellationToken = default)
         {
-
             return Task.Factory.StartNew(() =>
             {
-                Console.WriteLine($"Job: {context.JobDetail.Key} 执行完成");
-
-                var JobName = context.JobDetail.Key.Name;
-                string LogContent = $"Job: {context.JobDetail.Key} 执行完成";
-                int joibId = 0;
-                //if (context.MergedJobDataMap != null)
-                //{
-                //    // JobName =  context.MergedJobDataMap.GetString("JobName");
-                //    System.Text.StringBuilder log = new System.Text.StringBuilder();
-                //    int i = 0;
-                //    foreach (var item in context.MergedJobDataMap)
-                //    {
-                //        string key = item.Key;
-                //        if (key == JobCronTrigger.JobDataMapKeyJobId)
-                //        {
-                //            joibId = Convert.ToInt32(item.Value);
-                //        }
-                //        if (key.StartsWith("extend_"))
-                //        {
-                //            if (i > 0)
-                //            {
-                //                log.Append(",");
-                //            }
-                //            log.AppendFormat("{0}:{1}", item.Key, item.Value);
-                //            i++;
-                //        }
-                //    }
-                //    if (i > 0)
-                //    {
-                //        LogContent = string.Concat("[", log.ToString(), "]");
-                //    }
-                //}
-
-                //logmsg.Add(new LogMsgEntiry
-                //{
-                //    JobName = JobName,
-                //    CreatTime = DateTime.Now,
-                //    Msg = LogContent,
-                //    JobId = joibId
-                //});
-
+                var jobName = context.JobDetail.Key.Name;
+                var msg = $"jobName:{jobName},Job: {context.JobDetail.Key} Name={Name},TriggerComplete";
+                Singleton<MangerLog>.Instance.Error(msg);
+                Console.WriteLine(msg);
+                _logmsg.Insert(new logMsg
+                {
+                    JobName = jobName,
+                    Msg = msg
+                });
             });
 
         }
@@ -72,48 +43,15 @@ namespace TaskMangerData
 
             return Task.Factory.StartNew(() =>
             {
-               
-                Console.WriteLine($"Job: {context.JobDetail.Key} 运行中");
-
-                //var JobName = context.JobDetail.Key.Name;
-                //string LogContent = $"Job: {context.JobDetail.Key} 运行中";
-                //int joibId = 0;
-                //if (context.MergedJobDataMap != null)
-                //{
-                //    // JobName =  context.MergedJobDataMap.GetString("JobName");
-                //    System.Text.StringBuilder log = new System.Text.StringBuilder();
-                //    int i = 0;
-                //    foreach (var item in context.MergedJobDataMap)
-                //    {
-                //        string key = item.Key;
-                //        if (key == JobCronTrigger.JobDataMapKeyJobId)
-                //        {
-                //            joibId = Convert.ToInt32(item.Value);
-                //        }
-                //        if (key.StartsWith("extend_"))
-                //        {
-                //            if (i > 0)
-                //            {
-                //                log.Append(",");
-                //            }
-                //            log.AppendFormat("{0}:{1}", item.Key, item.Value);
-                //            i++;
-                //        }
-                //    }
-                //    if (i > 0)
-                //    {
-                //        LogContent = string.Concat("[", log.ToString(), "]");
-                //    }
-                //}
-
-                //logmsg.Add(new LogMsgEntiry
-                //{
-                //    JobName = JobName,
-                //    CreatTime = DateTime.Now,
-                //    Msg = LogContent,
-                //    JobId = joibId
-                //});
-
+                var jobName = context.JobDetail.Key.Name;
+                var msg = $"jobName:{jobName},Job: {context.JobDetail.Key} Name={Name},TriggerFired";
+                Singleton<MangerLog>.Instance.Error(msg);
+                Console.WriteLine(msg);
+                _logmsg.Insert(new logMsg
+                {
+                    JobName = jobName,
+                    Msg = msg
+                });
             });
         }
 
@@ -121,7 +59,36 @@ namespace TaskMangerData
         {
             return Task.Factory.StartNew(() =>
             {
-                //logsnlog.Error($"错过触发时调用(例：线程不够用的情况下)");
+                var jobName = trigger.JobDataMap;
+                System.Text.StringBuilder log = new System.Text.StringBuilder();
+                int i = 0;
+                var joibId = 0;
+                foreach (var item in trigger.JobDataMap)
+                {
+                    string key = item.Key;
+                    if (key == MangertKey.JobDataMapKeyJobId)
+                    {
+                        joibId = Convert.ToInt32(item.Value);
+                    }
+                    if (key.StartsWith("extend_"))
+                    {
+                        if (i > 0)
+                        {
+                            log.Append(",");
+                        }
+                        log.AppendFormat("{0}:{1}", item.Key, item.Value);
+                        i++;
+                    }
+                }
+
+                var msg = $"错过触发时调用(例：线程不够用的情况下) joibId: {joibId} Name={Name},{log.ToString()},TriggerMisfired";
+                //Singleton<MangerLog>.Instance.Error(msg);
+                Console.WriteLine(msg);
+                _logmsg.Insert(new logMsg
+                {
+                    JobName = joibId.ToString(),
+                    Msg = msg
+                });
             });
         }
 

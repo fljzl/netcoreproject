@@ -44,26 +44,6 @@ namespace apple.model.quarzt
            /// </summary>           
            public string JobName {get;set;}
 
-           /// <summary>
-           /// Desc:
-           /// Default:
-           /// Nullable:True
-           /// </summary>           
-           public DateTime? ExecutionTime {get;set;}
-
-           /// <summary>
-           /// Desc:
-           /// Default:0
-           /// Nullable:True
-           /// </summary>           
-           public double? ExecutionDuration {get;set;}
-
-           /// <summary>
-           /// Desc:
-           /// Default:
-           /// Nullable:True
-           /// </summary>           
-           public int? JobId {get;set;}
 
     }
 }

@@ -65,11 +65,10 @@ namespace apple.data.Quartz
             return Db.Deleteable<Customer_JobInfo>().Where(new Customer_JobInfo() { JobId = JobId }).ExecuteCommand() > 0;
         }
 
-        public bool UpdateRunTime(Customer_JobInfo entity)
+        public bool UpdateRunTime(int JobId)
         {
-            var t10 = Db.Updateable<Customer_JobInfo>().SetColumns(it => entity)
-            .Where(it => it.JobId == entity.JobId).ExecuteCommand();
-            return t10 > 0;
+            var t8 = Db.Updateable<Customer_JobInfo>().SetColumns(it => new Customer_JobInfo() { RunCount = it.RunCount + 1 }).Where(it => it.JobId == JobId).ExecuteCommand();
+            return t8 > 0;
         }
 
         /// <summary>

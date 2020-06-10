@@ -22,9 +22,8 @@ namespace apple.test.quartz
 
             #region 测试dll
 
-            MangerLog log = new MangerLog();
-            log.Error("log" + DateTime.Now.ToLongDateString());
-
+            //MangerLog log = new MangerLog();
+            //log.Error("log" + DateTime.Now.ToLongDateString());
             //MangerQuartznet manger = new MangerQuartznet();
             //QuatzjobRepostory _quartzrepository = new QuatzjobRepostory();
             //var job = _quartzrepository.FindById(4);
