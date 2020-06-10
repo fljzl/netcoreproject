@@ -1,8 +1,8 @@
 ﻿@{
     var addtype = ViewBag.addtype;
     ViewBag.Title = "quartz.net";
-    var tableid = "JobManager" + addtype;
-    var kzq = "/JobManger";
+    var tableid = "QuartzManget" + addtype;
+    var kzq = "/QuartzManget";
     Layout = "~/Views/Shared/_Content.cshtml";
     var addurl = kzq + "/SetIndex";
     #region 按钮权限验证
@@ -57,21 +57,16 @@
             </div>
         </div>
         <div class="layui-card-body">
-            <table class="layui-table" lay-data="{height: 'full-45',url:'@(kzq)/GetCouponIndexData', page:true, id:'@(tableid)',where:{content:'',time:'@timeShamp',addtype:'@addtype',region:''}}" lay-filter="demo">
+            <table class="layui-table" lay-data="{height: 'full-45',url:'@(kzq)/GetCouponIndexData', page:true, id:'@(tableid)',where:{content:''}}" lay-filter="demo">
                 <thead>
                     <tr>
 
                         <th lay-data="{width:'3%',fixed: true,templet: '<div>{{ d.LAY_TABLE_INDEX+1 }}</div>'}">No</th>
-
                         <th lay-data="{field:'JobName',align:'center',width:'80'}">JobName</th>
-
                         <th lay-data="{field:'JobGroupName',align:'center',width:'80'}">JobGroupName</th>
-
                         <th lay-data="{field:'Cron',align:'center',width:'80'}">Cron</th>
-
                         <th lay-data="{field:'CronExpressionDescription',align:'center',minwidth:'100'}">CronExpressionDescription</th>
                         <th lay-data="{field:'TriggerState',align:'center',width:'100',templet:'#TriggerState'}">TriggerState</th>
-
                         <th lay-data="{field:'TRIGGER_STATE',align:'center',width:'100',templet:'#TRIGGER_STATE'}">TRIGGER_STATE</th>
                         <th lay-data="{field:'DLLName',align:'center',width:'100'}">DLLName</th>
                         <th lay-data="{field:'FullJobName',align:'center',width:'150'}">FullJobName</th>
@@ -99,14 +94,14 @@
         <script type="text/html" id="barOperation">
             <div class="layui-btn-group">
 
-                {{# if(!TRIGGER_STATE){ }}
+                {{# if(!d.TRIGGER_STATE){ }}
                 <a class="layui-btn layui-btn-xs" lay-event="启用" href="javascript:void(0);">启动</a>
                 <a class="layui-btn layui-btn-xs" lay-event="修改" href="javascript:void(0);">修改</a>
                 <a class="layui-btn layui-btn-xs" lay-event="删除" href="javascript:void(0);">删除</a>
-                {{# } else if(TRIGGER_STATE=="PAUSED") { }}
+                {{# } else if(d.TRIGGER_STATE=="PAUSED") { }}
                 <a class="layui-btn layui-btn-xs" lay-event="恢复" href="javascript:void(0);">恢复</a>
                 <a class="layui-btn layui-btn-xs" lay-event="停止" href="javascript:void(0);">停止</a>
-                {{# } if(!TRIGGER_STATE.indeOf("BLOCKED")>-1) { }}
+                {{# } if(!d.TRIGGER_STATE.indexOf("BLOCKED")>-1) { }}
                 <a class="layui-btn layui-btn-xs" lay-event="暂停" href="javascript:void(0);">暂停</a>
                 {{# }  }}
             </div>
@@ -139,7 +134,11 @@
                 case 5: result = "停止中"; color = "layui-bg-orange"; break;
                 default:
             }
-            return "<span class='layui-badge " + color + "' title=" + result + ">" + result + "</span>";
+            if (result) {
+                return "<span class='layui-badge " + color + "' title=" + result + ">" + result + "</span>";
+            } else {
+                   return "<span></span>";
+            }
         }
 
 

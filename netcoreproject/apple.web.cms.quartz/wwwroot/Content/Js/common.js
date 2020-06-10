@@ -443,7 +443,7 @@ var WKFXCms = {
     ToDate: function (date, format) {
         if (!format)
             format = "yyyy-MM-dd hh:mm:ss";
-        if (date == null)
+        if (!date)
             return "";
         var mydate = new Date(date);
         //mydate.setHours(mydate.getHours() + 8);
@@ -452,7 +452,7 @@ var WKFXCms = {
     ToDayDate: function (date, format) {
         if (!format)
             format = "yyyy.MM.dd";
-        if (date == null)
+        if (!date)
             return "";
         var mydate = new Date(date);
         //mydate.setHours(mydate.getHours() + 8);

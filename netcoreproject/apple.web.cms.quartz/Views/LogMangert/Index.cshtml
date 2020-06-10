@@ -1,0 +1,101 @@
+﻿@{
+    var addtype = ViewBag.addtype;
+    ViewBag.Title = "quartz.net";
+    var tableid = " LogMangert" + addtype;
+    var kzq = "/JobManger";
+    Layout = "~/Views/Shared/_Content.cshtml";
+    #region 按钮权限验证
+    bool bcz = true, bxz = true, bxg = true, bsc = true, canQjY = true;
+    try
+    {
+        try
+        {
+            //IList<PageButtons> pageBtnList = MenuCommonHelper.GetUserAuth(Request.Url.LocalPath) as IList<PageButtons>;
+            //if (pageBtnList != null)
+            //{
+            //    bcz = pageBtnList.Where(p => p.Name == "查找").Count() != 0 ? true : false;
+            //    bxz = pageBtnList.Where(p => p.Name == "新增广告").Count() != 0 ? true : false;
+            //    bxg = pageBtnList.Where(p => p.Name == "修改").Count() != 0 ? true : false;
+            //    bsc = pageBtnList.Where(p => p.Name == "删除").Count() != 0 ? true : false;
+            //    canQjY = pageBtnList.Where(p => p.Name == "启禁用").Count() != 0 ? true : false;
+            //}
+        }
+        catch { }
+
+    }
+    catch { }
+    #endregion
+    var timeShamp = DateTime.Now;//table表格在页面重新加载时不重载数据
+    var isguoji = addtype == 22 ? true : false;
+}
+
+
+<style>
+    .layui-layer-tips {
+        left: 34% !important;
+    }
+</style>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <div class="layui-form">
+                <div class="layui-input-inline">
+                    <input type="text" value="" placeholder="" class="layui-input search_input layui-search-width">
+                </div>
+                <div class="layui-input-inline">
+                    <a class="layui-btn layui-fluid-select search_btn" data-type="reload"><i class="layui-icon">&#xe615;</i></a>
+                </div>
+            </div>
+            <div class="input-position">
+                <div class="layui-input-inline">
+                </div>
+            </div>
+        </div>
+        <div class="layui-card-body">
+            <table class="layui-table" lay-data="{height: 'full-45',url:'@(kzq)/GetListPage', page:true, id:'@(tableid)',where:{content:'',time:'@timeShamp',addtype:'@addtype'}}" lay-filter="demo">
+                <thead>
+                    <tr>
+                        <th lay-data="{width:'3%',fixed: true,templet: '<div>{{ d.LAY_TABLE_INDEX+1 }}</div>'}">No</th>
+                        <th lay-data="{field:'JobName',align:'center',width:'200'}">JobName</th>
+                        <th lay-data="{field:'JobGroupName',align:'center',min-width:'500'}">Msg</th>
+                        <th lay-data="{field:'CreateTime',align:'center',width:'160',templet: '<div>{{ WKFXCms.ToDate(d.CreateTime) }}</div>'}">创建时间</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+@section scripts{
+
+    <script type="text/javascript">
+
+        layui.use(['table', 'form'], function () {
+            var table = layui.table,
+                form = layui.form;
+
+            table.on('tool(demo)', function (obj) {
+                var data = obj.data;
+            });
+
+            var active = {
+                reload: function () {
+                    //执行重载
+                    table.reload('@tableid', {
+                        page: { curr: 1 }
+                        , where: {
+                            content: $.trim($(".search_input").val())
+                        }
+                    });
+                }
+            };
+
+            //查找
+            $(".search_btn").click(function () {
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+
+        });
+    </script>
+
+}

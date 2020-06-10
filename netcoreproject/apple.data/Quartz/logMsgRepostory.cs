@@ -38,7 +38,7 @@ namespace apple.data.Quartz
         /// <returns></returns>
         public List<logMsg> GetListPage(string content, int pageIndex, int pageSize, ref int totals)
         {
-            return Db.Queryable<logMsg>().Where(d => d.JobId.ToString().Contains(content) || d.JobName.Contains(content)).OrderBy(it => it.CreatTime, SqlSugar.OrderByType.Desc).ToPageList(pageIndex, pageSize, ref totals);
+            return Db.Queryable<logMsg>().Where(d => d.JobName.Contains(content)).OrderBy(it => it.CreatTime, SqlSugar.OrderByType.Desc).ToPageList(pageIndex, pageSize, ref totals);
         }
     }
 }
