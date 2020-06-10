@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "apple.test", "apple.test\ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestJob1", "TestJob1\TestJob1.csproj", "{27737C61-7ED8-43BA-9D8E-88B1A8EA82D6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testjob2", "Testjob2\Testjob2.csproj", "{3A6A1770-5312-4815-B5CD-BE57CB3F550D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{27737C61-7ED8-43BA-9D8E-88B1A8EA82D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27737C61-7ED8-43BA-9D8E-88B1A8EA82D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27737C61-7ED8-43BA-9D8E-88B1A8EA82D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A6A1770-5312-4815-B5CD-BE57CB3F550D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A6A1770-5312-4815-B5CD-BE57CB3F550D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A6A1770-5312-4815-B5CD-BE57CB3F550D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A6A1770-5312-4815-B5CD-BE57CB3F550D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +81,7 @@ Global
 		{0FC95817-072B-44B3-A058-A92392A80533} = {2095733D-51A1-405C-8548-E7BDEBF77EC3}
 		{DB9373A6-A159-432A-AEA8-11068CD10B4F} = {0A8E8C63-E1F4-4D4B-924C-8BA314995A6A}
 		{27737C61-7ED8-43BA-9D8E-88B1A8EA82D6} = {0A8E8C63-E1F4-4D4B-924C-8BA314995A6A}
+		{3A6A1770-5312-4815-B5CD-BE57CB3F550D} = {0A8E8C63-E1F4-4D4B-924C-8BA314995A6A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {64551657-2B03-4A42-A722-FEED6E2AB5C4}

@@ -1,0 +1,227 @@
+﻿@{
+    var addtype = ViewBag.addtype;
+    ViewBag.Title = "quartz.net";
+    var tableid = "JobManager" + addtype;
+    var kzq = "/JobManger";
+    Layout = "~/Views/Shared/_Content.cshtml";
+    var addurl = kzq + "/SetIndex";
+    #region 按钮权限验证
+    bool bcz = true, bxz = true, bxg = true, bsc = true, canQjY = true;
+    try
+    {
+        try
+        {
+            //IList<PageButtons> pageBtnList = MenuCommonHelper.GetUserAuth(Request.Url.LocalPath) as IList<PageButtons>;
+            //if (pageBtnList != null)
+            //{
+            //    bcz = pageBtnList.Where(p => p.Name == "查找").Count() != 0 ? true : false;
+            //    bxz = pageBtnList.Where(p => p.Name == "新增广告").Count() != 0 ? true : false;
+            //    bxg = pageBtnList.Where(p => p.Name == "修改").Count() != 0 ? true : false;
+            //    bsc = pageBtnList.Where(p => p.Name == "删除").Count() != 0 ? true : false;
+            //    canQjY = pageBtnList.Where(p => p.Name == "启禁用").Count() != 0 ? true : false;
+            //}
+        }
+        catch { }
+
+    }
+    catch { }
+    #endregion
+    var timeShamp = DateTime.Now;//table表格在页面重新加载时不重载数据
+    var isguoji = addtype == 22 ? true : false;
+}
+
+
+<style>
+    .layui-layer-tips {
+        left: 34% !important;
+    }
+</style>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <div class="layui-form">
+                <div class="layui-input-inline">
+                    <input type="text" value="" placeholder="" class="layui-input search_input layui-search-width">
+                </div>
+                <div class="layui-input-inline">
+                    <a class="layui-btn layui-fluid-select search_btn" data-type="reload"><i class="layui-icon">&#xe615;</i></a>
+                </div>
+            </div>
+            <div class="input-position">
+                <div class="layui-input-inline">
+                    <div class="layui-btn-group">
+                        <a class="layui-btn layui-btn-normal add"><i class="layui-icon">&#xe654;</i>新增</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="layui-card-body">
+            <table class="layui-table" lay-data="{height: 'full-45',url:'@(kzq)/GetCouponIndexData', page:true, id:'@(tableid)',where:{content:'',time:'@timeShamp',addtype:'@addtype',region:''}}" lay-filter="demo">
+                <thead>
+                    <tr>
+
+                        <th lay-data="{width:'3%',fixed: true,templet: '<div>{{ d.LAY_TABLE_INDEX+1 }}</div>'}">No</th>
+
+                        <th lay-data="{field:'JobName',align:'center',width:'80'}">JobName</th>
+
+                        <th lay-data="{field:'JobGroupName',align:'center',width:'80'}">JobGroupName</th>
+
+                        <th lay-data="{field:'Cron',align:'center',width:'80'}">Cron</th>
+
+                        <th lay-data="{field:'CronExpressionDescription',align:'center',minwidth:'100'}">CronExpressionDescription</th>
+                        <th lay-data="{field:'TriggerState',align:'center',width:'100',templet:'#TriggerState'}">TriggerState</th>
+
+                        <th lay-data="{field:'TRIGGER_STATE',align:'center',width:'100',templet:'#TRIGGER_STATE'}">TRIGGER_STATE</th>
+                        <th lay-data="{field:'DLLName',align:'center',width:'100'}">DLLName</th>
+                        <th lay-data="{field:'FullJobName',align:'center',width:'150'}">FullJobName</th>
+                        <th lay-data="{field:'RunCount',align:'center',width:'150'}">RunCount</th>
+
+                        <th lay-data="{field:'START_TIME',align:'center',width:'160',templet: '<div>{{ WKFXCms.ToDate(d.START_TIME) }}</div>'}">开始时间</th>
+                        <th lay-data="{field:'PREV_FIRE_TIME',align:'center',width:'160',templet: '<div>{{ WKFXCms.ToDate(d.PREV_FIRE_TIME) }}</div>'}">上次执行</th>
+                        <th lay-data="{field:'NEXT_FIRE_TIME',align:'center',width:'160',templet: '<div>{{ WKFXCms.ToDate(d.NEXT_FIRE_TIME) }}</div>'}">下次执行</th>
+                        <th lay-data="{field:'CreateTime',align:'center',width:'160',templet: '<div>{{ WKFXCms.ToDate(d.CreateTime) }}</div>'}">创建时间</th>
+                        <th lay-data="{field:'UpdateTime',align:'center',width:'160',templet: '<div>{{ WKFXCms.ToDate(d.UpdateTime) }}</div>'}">修改时间</th>
+                        @**@
+                        <th lay-data="{field:'Operation',width:'150', align:'center', toolbar: '#barOperation',fixed: 'right'}">操作</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+        <script type="text/html" id="TriggerState">
+            {{ GetTriggerState(d.TriggerState) }}
+        </script>
+        <script type="text/html" id="Deleted">
+            {{ GetDeleted(d.Deleted) }}
+        </script>
+
+        <script type="text/html" id="barOperation">
+            <div class="layui-btn-group">
+
+                {{# if(!TRIGGER_STATE){ }}
+                <a class="layui-btn layui-btn-xs" lay-event="启用" href="javascript:void(0);">启动</a>
+                <a class="layui-btn layui-btn-xs" lay-event="修改" href="javascript:void(0);">修改</a>
+                <a class="layui-btn layui-btn-xs" lay-event="删除" href="javascript:void(0);">删除</a>
+                {{# } else if(TRIGGER_STATE=="PAUSED") { }}
+                <a class="layui-btn layui-btn-xs" lay-event="恢复" href="javascript:void(0);">恢复</a>
+                <a class="layui-btn layui-btn-xs" lay-event="停止" href="javascript:void(0);">停止</a>
+                {{# } if(!TRIGGER_STATE.indeOf("BLOCKED")>-1) { }}
+                <a class="layui-btn layui-btn-xs" lay-event="暂停" href="javascript:void(0);">暂停</a>
+                {{# }  }}
+            </div>
+        </script>
+    </div>
+</div>
+@section scripts{
+
+    <script type="text/javascript">
+
+           function GetDeleted(t) {
+             var result = "";
+            var color = "";
+            switch (t) {
+                case 0: result = "正常"; color = "layui-bg-blue"; break;
+                case 1: result = "删除"; color = "layui-bg-black"; break;
+                default:
+            }
+            return "<span class='layui-badge " + color + "' title=" + result + ">" + result + "</span>";
+        }
+
+
+        function GetTriggerState(t) {
+             var result = "";
+            var color = "";
+            switch (t) {
+                case 0: result = "停止"; color = "layui-bg-black"; break;
+                case 1: result = "运行"; color = "layui-bg-blue"; break;
+                case 3: result = "正在启动中"; color = "layui-bg-green"; break;
+                case 5: result = "停止中"; color = "layui-bg-orange"; break;
+                default:
+            }
+            return "<span class='layui-badge " + color + "' title=" + result + ">" + result + "</span>";
+        }
+
+
+        layui.use(['table', 'form'], function () {
+            var table = layui.table,
+                form = layui.form;
+
+            table.on('tool(demo)', function (obj) {
+                var data = obj.data;
+                var showname = data.AdName;
+                if (obj.event == '修改') {//修改
+                    WKFXCms.OpenPart(2, "xggjc", '@(addurl)?type=edit&JobId=' + data.JobId, "修改"+data.JobName, ['1000px', '750px'], ['保存', '取消'], function (layero) {
+                    }, function (index, layero) {
+                        $(".btnEdit", layero.find("iframe")[0].contentWindow.document).click();
+                    });
+                }
+                 else if (obj.event == '启动') {
+                    WKFXCms.Confirm("您确定启动该条记录吗？", function () {
+                        WKFXCms.AjaxPost("@(kzq)/RunJob", "JobId=" + data.JobId, function (result) {
+                            table.reload("@tableid");
+                            WKFXCms.Msg(result.message);
+                        });
+                    })
+                } else if (obj.event == '删除') {
+                    WKFXCms.Confirm("您确定删除该条记录吗？", function () {
+                        WKFXCms.AjaxPost("@(kzq)/DeleteJob", "JobId=" + data.JobId, function (result) {
+                              table.reload("@tableid");
+                            WKFXCms.Msg(result.message);
+                        });
+                    })
+                }else if (obj.event == '恢复') {
+                    WKFXCms.Confirm("您确定恢复该条记录吗？", function () {
+                        WKFXCms.AjaxPost("@(kzq)/Resume", "JobId=" + data.JobId + "&isEnabled=false", function (result) {
+                              table.reload("@tableid");
+                            WKFXCms.Msg(result.message);
+                        });
+                    })
+                }else if (obj.event == '停止') {
+                    WKFXCms.Confirm("您确定停止该条记录吗？", function () {
+                        WKFXCms.AjaxPost("@(kzq)/Remove", "JobId=" + data.JobId + "&isEnabled=false", function (result) {
+
+                            WKFXCms.Msg(result.message);
+                        });
+                    })
+                }else if (obj.event == '暂停') {
+                    WKFXCms.Confirm("您确定暂停该条记录吗？", function () {
+                        WKFXCms.AjaxPost("@(kzq)/Pause", "JobId=" + data.JobId + "&isEnabled=false", function (result) {
+                              table.reload("@tableid");
+                            WKFXCms.Msg(result.message);
+                        });
+                    })
+                }
+            });
+
+            //新增广告
+            $(".add").click(function () {
+                WKFXCms.OpenPart(2, 'xzg', '@(addurl)?type=add', "新增@(ViewBag.Title)", ['1000px', '750px'], ['新增', '取消'], function (layero) {
+
+                }, function (index, layero) {
+                    $(".btnEdit", layero.find("iframe")[0].contentWindow.document).click();
+                });
+            });
+
+            var active = {
+                reload: function () {
+                    //执行重载
+                    table.reload('@tableid', {
+                        page: { curr: 1 }
+                        , where: {
+                            content: $.trim($(".search_input").val())
+                        }
+                    });
+                }
+            };
+
+            //查找
+            $(".search_btn").click(function () {
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+
+        });
+    </script>
+
+}

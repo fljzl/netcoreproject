@@ -46,7 +46,7 @@ namespace apple.web.cms.quartz
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=QuartzManget}/{action=Index}/{id?}");
             });
         }
     }

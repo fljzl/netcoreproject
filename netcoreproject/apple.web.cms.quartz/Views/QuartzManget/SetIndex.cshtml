@@ -1,0 +1,148 @@
+﻿@using apple.model.quarzt;
+@{
+    var addtype = ViewBag.addtype;
+    var title = "quartz.net-add";
+    var tableid = "JobManager" + addtype;
+    var kzq = "/JobManger";
+    var data = ViewBag.modeldata as Customer_JobInfo;
+    if (data == null)
+    {
+        data = new Customer_JobInfo();
+    }
+    var isadd = false;
+    ViewBag.Title = (isadd ? "新增" : "修改") + title;
+    Layout = "~/Views/Shared/_Content.cshtml";
+}
+
+@section styles{
+
+}
+
+<div class="divbody">
+    <form class="layui-form layui-form-pane">
+        <input type="hidden" name="JobId" value="@data.JobId" />
+        <input type="hidden" name="RunCount" value="@data.RunCount" />
+        <div class="layui-form-item">
+            <label class="layui-form-label" input-name="JobName">*作业名称</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" name="JobName" autocomplete="off" placeholder="请输入作业名称" value="@data.JobName" lay-verify="required">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" input-name="JobGroupName">*JobGroupName</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" name="JobGroupName" autocomplete="off" placeholder="" value="@data.JobGroupName" lay-verify="required">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" input-name="JobGroupName">*TriggerName</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" name="TriggerName" autocomplete="off" placeholder="" value="@data.TriggerName" lay-verify="required">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" input-name="JobGroupName">*TriggerGroupName</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" name="TriggerGroupName" autocomplete="off" placeholder="" value="@data.TriggerGroupName" lay-verify="required">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" input-name="JobGroupName">*时间表达式</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" name="Cron" autocomplete="off" placeholder="请输入时间表达式" value="@data.Cron" lay-verify="required">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" input-name="CronExpressionDescription">*CronExpressionDescription</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" name="CronExpressionDescription" autocomplete="off" placeholder="" value="@data.CronExpressionDescription" lay-verify="required">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" input-name="JobGroupName">*程序集</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" name="DLLName" autocomplete="off" placeholder="E:\data\netstandard2.0\Manger.dll (请输入程序集的物理路径(含文件名,扩展名))" value="@data.DLLName" lay-verify="required">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" input-name="JobGroupName">*FullJobName</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" name="FullJobName" autocomplete="off" placeholder="Manger.Test(请输入实体类型的完全限定名(命名空间.类名))" value="@data.FullJobName" lay-verify="required">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" input-name="JobGroupName">JobArgs</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" name="JobArgs" autocomplete="off" placeholder="给job传值" value="@data.JobArgs">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" input-name="Description">*Description</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" name="Description" autocomplete="off" placeholder="" value="@data.Description" lay-verify="required">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" input-name="RequestUrl">*RequestUrl(暂不使用)</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" name="RequestUrl" autocomplete="off" placeholder="调用接口" value="@data.RequestUrl" lay-verify="required">
+            </div>
+        </div>
+
+        <div class="layui-form-item" align="center" style="display:block;">
+            <button class="layui-btn layui-btn-normal btnEdit" lay-submit="" lay-filter="btnEdit">操作</button>
+        </div>
+
+    </form>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        var isadd = "@isadd";
+        var addtype = "@addtype";
+        layui.use(['jquery', 'formSelects', 'laydate'], function () {
+            var laydate = layui.laydate;
+
+            //表单提交
+
+             WKFXCms.Form({ },
+            function (form) {
+            //是否显示首页
+            //监听提交
+            form.on('submit(btnEdit)', function (data) {
+                var obj = data.field;
+                if (obj != null) {
+
+                    WKFXCms.AjaxJson("@(kzq)/AddJob", "Post", obj, function (result) {
+                        console.log(result);
+                        if (result.isSuccess) {
+                                WKFXCms.CloseFrame();
+                                WKFXCms.ParentLoad("@tableid");
+                                WKFXCms.ParentMsg("操作成功");
+                            } else
+                                WKFXCms.Msg1(result.message, 5);
+                            });
+
+                }
+                return false;
+            });
+            });
+            //表单提交结束
+
+        });
+
+    </script>
+}
