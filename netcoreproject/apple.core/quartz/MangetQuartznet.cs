@@ -3,9 +3,10 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using apple.Infrastructure;
 using apple.model.quarzt;
 using Quartz;
-namespace apple.Infrastructure.quartz
+namespace apple.core
 {
     public class MangerQuartznet : IDisposable
     {

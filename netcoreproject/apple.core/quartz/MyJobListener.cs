@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using apple.data.Quartz;
-namespace apple.Infrastructure.quartz
+using apple.Infrastructure;
+
+namespace apple.core
 {
     public class MyJobListener : IJobListener
     {
@@ -93,7 +95,7 @@ namespace apple.Infrastructure.quartz
                 var jobName = context.JobDetail.Key.Name;
                 Singleton<MangerLog>.Instance.Infor($"{Name} Job: {context.JobDetail.Key} 执行完成");
 
-                _quatzjobRepostory.
+        
                 //jobinforrepository.UpdateBackgroundJobStatus(joibId, FireTimeUtc, NextFireTimeUtc);
 
                 //logs.Info(new LogMsgEntiry
@@ -106,7 +108,7 @@ namespace apple.Infrastructure.quartz
                 //    JobId = joibId
                 //});
 
-                Console.WriteLine($"Job: {context.JobDetail.Key} 执行完成");
+                //Console.WriteLine($"Job: {context.JobDetail.Key} 执行完成");
             });
         }
         #endregion

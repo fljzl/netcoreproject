@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\apple.data\apple.data.csproj" />
     <ProjectReference Include="..\apple.model\apple.model.csproj" />
   </ItemGroup>
 

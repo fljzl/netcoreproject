@@ -1,20 +1,17 @@
-﻿using Quartz;
+﻿using apple.data.Quartz;
+using Quartz;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using TaskMangerData.Repository;
-
 namespace TaskMangerData
 {
     public class MySchedulerListener : ISchedulerListener
     {
 
-        private ILogCms logsnlog = LogCmsFactory.GetLogCms(0);
-        JobInfoRepository jobinforrepository = new JobInfoRepository();
-        LogMsgRepository logmsg = new LogMsgRepository();
-
+        QuatzjobRepostory _quatzjobRepostory;
         public MySchedulerListener()
         {
+            _quatzjobRepostory = new QuatzjobRepostory();
         }
 
         public Task JobAdded(IJobDetail jobDetail, CancellationToken cancellationToken = default)

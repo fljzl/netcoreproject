@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Text;
 using apple.Infrastructure;
 using apple.data.Quartz;
-using apple.Infrastructure.quartz;
 using System.Runtime.Loader;
 using System.Reflection;
 using System.IO;
@@ -12,6 +11,7 @@ using System.Threading;
 using Quartz;
 using System.Threading.Tasks;
 using apple.model.quarzt;
+using apple.core;
 
 namespace apple.test.quartz
 {

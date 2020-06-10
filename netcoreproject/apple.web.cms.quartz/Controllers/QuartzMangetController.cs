@@ -9,8 +9,8 @@ using apple.web.cms.quartz.Models;
 using apple.data.Quartz;
 using apple.model.quarzt;
 using apple.model;
-using apple.Infrastructure.quartz;
 using Newtonsoft.Json;
+using apple.core;
 
 namespace apple.web.cms.quartz.Controllers
 {

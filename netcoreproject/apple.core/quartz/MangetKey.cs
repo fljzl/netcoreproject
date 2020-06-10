@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using apple.model.quarzt;
 using Quartz;
-namespace apple.Infrastructure.quartz
+namespace apple.core
 {
 
     public class MangertKey

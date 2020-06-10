@@ -1,4 +1,5 @@
-﻿using Quartz;
+﻿using apple.Infrastructure;
+using Quartz;
 using Quartz.Impl;
 using System;
 using System.Collections.Concurrent;
@@ -6,7 +7,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Text;
 
-namespace apple.Infrastructure.quartz
+namespace apple.core
 {
     public class ManagerScheduler: Singleton<ManagerScheduler>
     {

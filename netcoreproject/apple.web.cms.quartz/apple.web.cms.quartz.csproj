@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\apple.core\apple.core.csproj" />
     <ProjectReference Include="..\apple.data\apple.data.csproj" />
     <ProjectReference Include="..\apple.Infrastructure\apple.Infrastructure.csproj" />
     <ProjectReference Include="..\apple.model\apple.model.csproj" />
