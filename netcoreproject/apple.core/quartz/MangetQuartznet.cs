@@ -35,13 +35,12 @@ namespace apple.core
         {
             var jobKey = MangertKey.CreateJobKey(jobInfo.JobName, jobInfo.JobGroupName);
             var triggerKey = MangertKey.CreateTriggerKey(jobInfo.TriggerName, jobInfo.TriggerGroupName);
-            Scheduler.PauseTrigger(triggerKey);//.wait()
-            Scheduler.PauseJob(jobKey);
+            Scheduler.PauseJob(jobKey).Wait();
             return true;
         }
 
         /// <summary>
-        /// 重启任务，待续
+        /// 重启任务
         /// </summary>
         /// <param name="jobInfo"></param>
         /// <returns></returns>
@@ -49,7 +48,7 @@ namespace apple.core
         {
             var jobKey = MangertKey.CreateJobKey(jobInfo.JobName, jobInfo.JobGroupName);
             var triggerKey = MangertKey.CreateTriggerKey(jobInfo.TriggerName, jobInfo.TriggerGroupName);
-            Scheduler.ResumeJob(jobKey);
+            Scheduler.ResumeJob(jobKey).Wait();
             return true;
         }
 
@@ -64,7 +63,6 @@ namespace apple.core
             var triggerKey = MangertKey.CreateTriggerKey(jobInfo.TriggerName, jobInfo.TriggerGroupName);
             var trigger = TriggerBuilder.Create().StartAt(DateTimeOffset.Now.AddYears(-1)).WithIdentity(triggerKey).WithSchedule(scheduleBuilder.WithMisfireHandlingInstructionDoNothing()).Build();
             Scheduler.RescheduleJob(triggerKey, trigger);
-
             return true;
         }
 

@@ -26,6 +26,9 @@ namespace apple.web.cms.quartz.Controllers
             _logger = logger;
         }
 
+        #region 页面层级
+
+
         public IActionResult Index()
         {
             return View();
@@ -38,8 +41,6 @@ namespace apple.web.cms.quartz.Controllers
             var result = _quartzrepository.GetListPage(content, page, limit, ref total);
             return JsonConvert.SerializeObject(new ResultMsg<IEnumerable<Customer_JobInfoViewModel>>(0, "", result, total));
         }
-
-        #region 操作任务
 
         public ActionResult SetIndex(int JobId)
         {
@@ -56,6 +57,12 @@ namespace apple.web.cms.quartz.Controllers
 
         public ActionResult AddJob(Customer_JobInfo obj)
         {
+            if (!_quartzmanger.ValidExpression(obj.Cron))
+            {
+                var result = new ExecutionResult() { IsSuccess = false, Message = "Cron表达式不正确" };
+                return Json(result);
+            }
+
             if (obj.JobId > 0)
             {
                 //修改
@@ -90,6 +97,11 @@ namespace apple.web.cms.quartz.Controllers
                 }
             }
         }
+
+        #endregion
+
+
+        #region 操作任务
 
         /// <summary>
         /// 启动任务

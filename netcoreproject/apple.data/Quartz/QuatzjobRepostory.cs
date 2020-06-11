@@ -78,9 +78,23 @@ namespace apple.data.Quartz
         /// <returns></returns>
         public bool UpdateCustomerJobInfo(Customer_JobInfo entity)
         {
-            var t10 = Db.Updateable<Customer_JobInfo>().SetColumns(it => entity)
-            .Where(it => it.JobId == entity.JobId).ExecuteCommand();
-            return t10 > 0;
+            var t8 = Db.Updateable<Customer_JobInfo>().SetColumns(it => new Customer_JobInfo()
+            {
+                Cron = entity.Cron,
+                Description = entity.Description,
+                DLLName = entity.DLLName,
+                CronExpressionDescription = entity.CronExpressionDescription,
+                FullJobName = entity.FullJobName,
+                JobArgs = entity.JobArgs,
+                JobName = entity.JobName,
+                UpdateTime = DateTime.Now,
+                Updator = "admin",
+                TriggerName = entity.TriggerName,
+                TriggerGroupName = entity.TriggerGroupName,
+                RequestUrl = entity.RequestUrl,
+                JobGroupName = entity.JobGroupName
+            }).Where(it => it.JobId == entity.JobId).ExecuteCommand();
+            return t8 > 0;
         }
     }
 }

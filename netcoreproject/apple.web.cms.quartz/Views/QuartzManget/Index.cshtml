@@ -59,7 +59,7 @@
             <table class="layui-table" lay-data="{height: 'full-45',url:'@(kzq)/GetCouponIndexData', page:true, id:'@(tableid)',where:{content:''}}" lay-filter="demo">
                 <thead>
                     <tr>
-                        <th lay-data="{width:'3%',fixed: true,templet: '<div>{{ d.LAY_TABLE_INDEX+1 }}</div>'}">No</th>
+                        <th lay-data="{width:'3%',fixed: true,templet: '<div>{{ d.JobId }}</div>'}">JobId</th>
                         <th lay-data="{field:'JobName',align:'center',width:'120'}">JobName</th>
                         <th lay-data="{field:'JobGroupName',align:'center',width:'120'}">JobGroupName</th>
                         <th lay-data="{field:'Cron',align:'center',width:'100',templet:'#CronExpressionDescription'}">Cron</th>
