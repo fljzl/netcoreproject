@@ -560,16 +560,8 @@ var WKFXCms = {
     },//时间转时间戳
     DateToString: function (date) {
         return dateToString(date);
-    },//时间格式转换
-    ToDate: function (date, format) {
-        if (date == null)
-            return "";
-        if (!format)
-            format = "yyyy-MM-dd hh:mm:ss";
-        var mydate = new Date(date);
-        //mydate.setHours(mydate.getHours() + 8);
-        return mydate.format(format);
-    },//去除所有空格
+    },
+    //去除所有空格
     Trim: function (str, is_global) {
         var result;
         result = str.replace(/(^\s+)|(\s+$)/g, "");

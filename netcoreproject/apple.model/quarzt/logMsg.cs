@@ -11,38 +11,39 @@ namespace apple.model.quarzt
     [SugarTable("logMsg")]
     public partial class logMsg
     {
-           public logMsg(){
+        public logMsg()
+        {
 
 
-           }
-           /// <summary>
-           /// Desc:
-           /// Default:
-           /// Nullable:False
-           /// </summary>           
-           [SugarColumn(IsPrimaryKey=true,IsIdentity=true)]
-           public int Id {get;set;}
+        }
+        /// <summary>
+        /// Desc:
+        /// Default:
+        /// Nullable:False
+        /// </summary>           
+        [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
+        public int Id { get; set; }
 
-           /// <summary>
-           /// Desc:
-           /// Default:
-           /// Nullable:True
-           /// </summary>           
-           public string Msg {get;set;}
+        /// <summary>
+        /// Desc:
+        /// Default:
+        /// Nullable:True
+        /// </summary>           
+        public string Msg { get; set; }
 
-           /// <summary>
-           /// Desc:
-           /// Default:DateTime.Now
-           /// Nullable:True
-           /// </summary>           
-           public DateTime? CreatTime {get;set;}
+        /// <summary>
+        /// Desc:
+        /// Default:DateTime.Now
+        /// Nullable:True
+        /// </summary>           
+        public DateTime? CreateTime { get; set; }
 
-           /// <summary>
-           /// Desc:
-           /// Default:
-           /// Nullable:True
-           /// </summary>           
-           public string JobName {get;set;}
+        /// <summary>
+        /// Desc:
+        /// Default:
+        /// Nullable:True
+        /// </summary>           
+        public string JobName { get; set; }
 
 
     }

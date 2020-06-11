@@ -1,11 +1,13 @@
 ﻿using apple.Infrastructure;
 using Quartz;
 using Quartz.Impl;
+using Quartz.Impl.Matchers;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Text;
+using TaskMangerData;
 
 namespace apple.core
 {
@@ -37,8 +39,14 @@ namespace apple.core
             }
 
             var schedulerFactory = new StdSchedulerFactory(properties);
+           
             Scheduler = schedulerFactory.GetScheduler().Result;
 
+            Scheduler.ListenerManager.AddJobListener(new MyJobListener(), GroupMatcher<JobKey>.AnyGroup());
+
+            Scheduler.ListenerManager.AddSchedulerListener(new MySchedulerListener());
+
+            Scheduler.ListenerManager.AddTriggerListener(new MyTriggerListener(), GroupMatcher<TriggerKey>.AnyGroup());
             return Scheduler;
         }
 

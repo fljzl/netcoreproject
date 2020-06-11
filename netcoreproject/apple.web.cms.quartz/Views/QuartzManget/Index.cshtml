@@ -22,7 +22,6 @@
             //}
         }
         catch { }
-
     }
     catch { }
     #endregion
@@ -62,16 +61,14 @@
                     <tr>
 
                         <th lay-data="{width:'3%',fixed: true,templet: '<div>{{ d.LAY_TABLE_INDEX+1 }}</div>'}">No</th>
-                        <th lay-data="{field:'JobName',align:'center',width:'80'}">JobName</th>
-                        <th lay-data="{field:'JobGroupName',align:'center',width:'80'}">JobGroupName</th>
-                        <th lay-data="{field:'Cron',align:'center',width:'80'}">Cron</th>
-                        <th lay-data="{field:'CronExpressionDescription',align:'center',minwidth:'100'}">CronExpressionDescription</th>
+                        <th lay-data="{field:'JobName',align:'center',width:'120'}">JobName</th>
+                        <th lay-data="{field:'JobGroupName',align:'center',width:'120'}">JobGroupName</th>
+                        <th lay-data="{field:'Cron',align:'center',width:'100',templet:'#CronExpressionDescription'}">Cron</th>
                         <th lay-data="{field:'TriggerState',align:'center',width:'100',templet:'#TriggerState'}">TriggerState</th>
                         <th lay-data="{field:'TRIGGER_STATE',align:'center',width:'100',templet:'#TRIGGER_STATE'}">TRIGGER_STATE</th>
                         <th lay-data="{field:'DLLName',align:'center',width:'100'}">DLLName</th>
                         <th lay-data="{field:'FullJobName',align:'center',width:'150'}">FullJobName</th>
-                        <th lay-data="{field:'RunCount',align:'center',width:'150'}">RunCount</th>
-
+                        <th lay-data="{field:'RunCount',align:'center',width:'80'}">RunCount</th>
                         <th lay-data="{field:'START_TIME',align:'center',width:'160',templet: '<div>{{ WKFXCms.ToDate(d.START_TIME) }}</div>'}">开始时间</th>
                         <th lay-data="{field:'PREV_FIRE_TIME',align:'center',width:'160',templet: '<div>{{ WKFXCms.ToDate(d.PREV_FIRE_TIME) }}</div>'}">上次执行</th>
                         <th lay-data="{field:'NEXT_FIRE_TIME',align:'center',width:'160',templet: '<div>{{ WKFXCms.ToDate(d.NEXT_FIRE_TIME) }}</div>'}">下次执行</th>
@@ -84,6 +81,12 @@
             </table>
         </div>
 
+
+        <script type="text/html" id="CronExpressionDescription">
+            {{# if(d.Cron){ }}
+            <span class="layui-badge" title="{{d.CronExpressionDescription}}">{{ d.Cron }}</span>
+            {{# } }}
+        </script>
         <script type="text/html" id="TriggerState">
             {{ GetTriggerState(d.TriggerState) }}
         </script>
@@ -93,17 +96,7 @@
 
         <script type="text/html" id="barOperation">
             <div class="layui-btn-group">
-
-                {{# if(!d.TRIGGER_STATE){ }}
-                <a class="layui-btn layui-btn-xs" lay-event="启用" href="javascript:void(0);">启动</a>
-                <a class="layui-btn layui-btn-xs" lay-event="修改" href="javascript:void(0);">修改</a>
-                <a class="layui-btn layui-btn-xs" lay-event="删除" href="javascript:void(0);">删除</a>
-                {{# } else if(d.TRIGGER_STATE=="PAUSED") { }}
-                <a class="layui-btn layui-btn-xs" lay-event="恢复" href="javascript:void(0);">恢复</a>
-                <a class="layui-btn layui-btn-xs" lay-event="停止" href="javascript:void(0);">停止</a>
-                {{# } if(!d.TRIGGER_STATE.indexOf("BLOCKED")>-1) { }}
-                <a class="layui-btn layui-btn-xs" lay-event="暂停" href="javascript:void(0);">暂停</a>
-                {{# }  }}
+                {{ getbarOperation(d.TRIGGER_STATE) }}
             </div>
         </script>
     </div>
@@ -111,6 +104,27 @@
 @section scripts{
 
     <script type="text/javascript">
+
+          function getbarOperation(TRIGGER_STATE) {
+              //if (!TRIGGER_STATE) {
+              //    return ' <a class="layui-btn layui-btn-xs" lay-event="启动" href="javascript:void(0);">启动</a>' +
+              //        ' <a class="layui-btn layui-btn-xs" lay-event="修改" href="javascript:void(0);">修改</a>' +
+              //        '<a class="layui-btn layui-btn-xs" lay-event="删除" href="javascript:void(0);">删除</a>';
+              //} else if (TRIGGER_STATE == "PAUSED") {
+              //    return ' <a class="layui-btn layui-btn-xs" lay-event="恢复" href="javascript:void(0);">恢复</a>' +
+              //        '    <a class="layui-btn layui-btn-xs" lay-event="停止" href="javascript:void(0);">停止</a>';
+              //} else if (TRIGGER_STATE.indexOf("BLOCKED") > -1) {
+              //    return ' <a class="layui-btn layui-btn-xs" lay-event="恢复" href="javascript:void(0);">恢复</a>';
+              //} else {
+              //    return ' <a class="layui-btn layui-btn-xs" lay-event="停止" href="javascript:void(0);">停止</a>';
+              //}
+
+                     return ' <a class="layui-btn layui-btn-xs" lay-event="启动" href="javascript:void(0);">启动</a>' +
+                         ' <a class="layui-btn layui-btn-xs" lay-event="修改" href="javascript:void(0);">修改</a>' +
+                         ' <a class="layui-btn layui-btn-xs" lay-event="停止" href="javascript:void(0);">停止</a>' +
+                          ' <a class="layui-btn layui-btn-xs" lay-event="恢复" href="javascript:void(0);">恢复</a>'+
+                      '<a class="layui-btn layui-btn-xs" lay-event="删除" href="javascript:void(0);">删除</a>';
+          }
 
            function GetDeleted(t) {
              var result = "";
@@ -171,21 +185,21 @@
                     })
                 }else if (obj.event == '恢复') {
                     WKFXCms.Confirm("您确定恢复该条记录吗？", function () {
-                        WKFXCms.AjaxPost("@(kzq)/Resume", "JobId=" + data.JobId + "&isEnabled=false", function (result) {
+                        WKFXCms.AjaxPost("@(kzq)/Resume", "JobId=" + data.JobId , function (result) {
                               table.reload("@tableid");
                             WKFXCms.Msg(result.message);
                         });
                     })
                 }else if (obj.event == '停止') {
                     WKFXCms.Confirm("您确定停止该条记录吗？", function () {
-                        WKFXCms.AjaxPost("@(kzq)/Remove", "JobId=" + data.JobId + "&isEnabled=false", function (result) {
+                        WKFXCms.AjaxPost("@(kzq)/Remove", "JobId=" + data.JobId, function (result) {
 
                             WKFXCms.Msg(result.message);
                         });
                     })
                 }else if (obj.event == '暂停') {
                     WKFXCms.Confirm("您确定暂停该条记录吗？", function () {
-                        WKFXCms.AjaxPost("@(kzq)/Pause", "JobId=" + data.JobId + "&isEnabled=false", function (result) {
+                        WKFXCms.AjaxPost("@(kzq)/Pause", "JobId=" + data.JobId, function (result) {
                               table.reload("@tableid");
                             WKFXCms.Msg(result.message);
                         });

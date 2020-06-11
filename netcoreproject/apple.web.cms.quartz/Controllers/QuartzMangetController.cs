@@ -170,9 +170,9 @@ namespace apple.web.cms.quartz.Controllers
         /// <param name="jobId">任务编号</param>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult Resume(int Id)
+        public JsonResult Resume(int JobId)
         {
-            var jobDetail = _operateJob(Id);
+            var jobDetail = _operateJob(JobId);
             if (jobDetail != null)
             {
                 var flag = _quartzmanger.ResumeJob(jobDetail);
@@ -190,9 +190,9 @@ namespace apple.web.cms.quartz.Controllers
         /// <param name="jobId">任务编号</param>
         /// <param name="operateJobFunc">具体操作任务的委托</param>
         /// <returns></returns>
-        private Customer_JobInfo _operateJob(int Id)
+        private Customer_JobInfo _operateJob(int JobId)
         {
-            return _quartzrepository.FindById(Id);
+            return _quartzrepository.FindById(JobId);
         }
 
 
