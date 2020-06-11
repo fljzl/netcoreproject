@@ -2,8 +2,8 @@
 @{
     var addtype = ViewBag.addtype;
     var title = "quartz.net-add";
-    var tableid = "JobManager" + addtype;
-    var kzq = "/JobManger";
+    var tableid = "QuartzManget" + addtype;
+    var kzq = "/QuartzManget";
     var data = ViewBag.modeldata as Customer_JobInfo;
     if (data == null)
     {
@@ -94,7 +94,7 @@
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label" input-name="RequestUrl">*RequestUrl(暂不使用)</label>
+            <label class="layui-form-label" input-name="RequestUrl">RequestUrl</label>
             <div class="layui-input-block">
                 <input type="text" class="layui-input" name="RequestUrl" autocomplete="off" placeholder="调用接口" value="@data.RequestUrl" lay-verify="required">
             </div>
@@ -115,12 +115,8 @@
         var addtype = "@addtype";
         layui.use(['jquery', 'formSelects', 'laydate'], function () {
             var laydate = layui.laydate;
-
-            //表单提交
-
              WKFXCms.Form({ },
             function (form) {
-            //是否显示首页
             //监听提交
             form.on('submit(btnEdit)', function (data) {
                 var obj = data.field;

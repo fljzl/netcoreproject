@@ -59,7 +59,6 @@
             <table class="layui-table" lay-data="{height: 'full-45',url:'@(kzq)/GetCouponIndexData', page:true, id:'@(tableid)',where:{content:''}}" lay-filter="demo">
                 <thead>
                     <tr>
-
                         <th lay-data="{width:'3%',fixed: true,templet: '<div>{{ d.LAY_TABLE_INDEX+1 }}</div>'}">No</th>
                         <th lay-data="{field:'JobName',align:'center',width:'120'}">JobName</th>
                         <th lay-data="{field:'JobGroupName',align:'center',width:'120'}">JobGroupName</th>
@@ -72,10 +71,8 @@
                         <th lay-data="{field:'START_TIME',align:'center',width:'160',templet: '<div>{{ WKFXCms.ToDate(d.START_TIME) }}</div>'}">开始时间</th>
                         <th lay-data="{field:'PREV_FIRE_TIME',align:'center',width:'160',templet: '<div>{{ WKFXCms.ToDate(d.PREV_FIRE_TIME) }}</div>'}">上次执行</th>
                         <th lay-data="{field:'NEXT_FIRE_TIME',align:'center',width:'160',templet: '<div>{{ WKFXCms.ToDate(d.NEXT_FIRE_TIME) }}</div>'}">下次执行</th>
-                        <th lay-data="{field:'CreateTime',align:'center',width:'160',templet: '<div>{{ WKFXCms.ToDate(d.CreateTime) }}</div>'}">创建时间</th>
                         <th lay-data="{field:'UpdateTime',align:'center',width:'160',templet: '<div>{{ WKFXCms.ToDate(d.UpdateTime) }}</div>'}">修改时间</th>
-                        @**@
-                        <th lay-data="{field:'Operation',width:'150', align:'center', toolbar: '#barOperation',fixed: 'right'}">操作</th>
+                        <th lay-data="{field:'Operation',width:'200', align:'center', toolbar: '#barOperation',fixed: 'right'}">操作</th>
                     </tr>
                 </thead>
             </table>
@@ -84,48 +81,29 @@
 
         <script type="text/html" id="CronExpressionDescription">
             {{# if(d.Cron){ }}
-            <span class="layui-badge" title="{{d.CronExpressionDescription}}">{{ d.Cron }}</span>
+            <span title="{{d.CronExpressionDescription}}">{{ d.Cron }}</span>
             {{# } }}
         </script>
+
         <script type="text/html" id="TriggerState">
-            {{ GetTriggerState(d.TriggerState) }}
-        </script>
-        <script type="text/html" id="Deleted">
-            {{ GetDeleted(d.Deleted) }}
+            {{ GetTriggerState(d.TRIGGER_STATE) }}
         </script>
 
         <script type="text/html" id="barOperation">
             <div class="layui-btn-group">
-                {{ getbarOperation(d.TRIGGER_STATE) }}
+                <a class="layui-btn layui-btn-xs" lay-event="启动" href="javascript:void(0);">启动</a>
+                <a class="layui-btn layui-btn-xs" lay-event="修改" href="javascript:void(0);">修改</a>
+                <a class="layui-btn layui-btn-xs" lay-event="停止" href="javascript:void(0);">停止</a>
+                <a class="layui-btn layui-btn-xs" lay-event="恢复" href="javascript:void(0);">恢复</a>
+                <a class="layui-btn layui-btn-xs" lay-event="删除" href="javascript:void(0);">删除</a>
             </div>
         </script>
+
     </div>
 </div>
 @section scripts{
 
     <script type="text/javascript">
-
-          function getbarOperation(TRIGGER_STATE) {
-              //if (!TRIGGER_STATE) {
-              //    return ' <a class="layui-btn layui-btn-xs" lay-event="启动" href="javascript:void(0);">启动</a>' +
-              //        ' <a class="layui-btn layui-btn-xs" lay-event="修改" href="javascript:void(0);">修改</a>' +
-              //        '<a class="layui-btn layui-btn-xs" lay-event="删除" href="javascript:void(0);">删除</a>';
-              //} else if (TRIGGER_STATE == "PAUSED") {
-              //    return ' <a class="layui-btn layui-btn-xs" lay-event="恢复" href="javascript:void(0);">恢复</a>' +
-              //        '    <a class="layui-btn layui-btn-xs" lay-event="停止" href="javascript:void(0);">停止</a>';
-              //} else if (TRIGGER_STATE.indexOf("BLOCKED") > -1) {
-              //    return ' <a class="layui-btn layui-btn-xs" lay-event="恢复" href="javascript:void(0);">恢复</a>';
-              //} else {
-              //    return ' <a class="layui-btn layui-btn-xs" lay-event="停止" href="javascript:void(0);">停止</a>';
-              //}
-
-                     return ' <a class="layui-btn layui-btn-xs" lay-event="启动" href="javascript:void(0);">启动</a>' +
-                         ' <a class="layui-btn layui-btn-xs" lay-event="修改" href="javascript:void(0);">修改</a>' +
-                         ' <a class="layui-btn layui-btn-xs" lay-event="停止" href="javascript:void(0);">停止</a>' +
-                          ' <a class="layui-btn layui-btn-xs" lay-event="恢复" href="javascript:void(0);">恢复</a>'+
-                      '<a class="layui-btn layui-btn-xs" lay-event="删除" href="javascript:void(0);">删除</a>';
-          }
-
            function GetDeleted(t) {
              var result = "";
             var color = "";
@@ -139,20 +117,21 @@
 
 
         function GetTriggerState(t) {
-             var result = "";
-            var color = "";
-            switch (t) {
-                case 0: result = "停止"; color = "layui-bg-black"; break;
-                case 1: result = "运行"; color = "layui-bg-blue"; break;
-                case 3: result = "正在启动中"; color = "layui-bg-green"; break;
-                case 5: result = "停止中"; color = "layui-bg-orange"; break;
-                default:
-            }
-            if (result) {
-                return "<span class='layui-badge " + color + "' title=" + result + ">" + result + "</span>";
-            } else {
-                   return "<span></span>";
-            }
+            //var result = "";
+            //var color = "";
+            //switch (t) {
+            //    case 0: result = "停止"; color = "layui-bg-black"; break;
+            //    case 1: result = "运行"; color = "layui-bg-blue"; break;
+            //    case 3: result = "正在启动中"; color = "layui-bg-green"; break;
+            //    case "": result = "停止中"; color = "layui-bg-orange"; break;
+            //    default:
+            //}
+            //if (result) {
+            //    return "<span class='layui-badge " + color + "' title=" + result + ">" + result + "</span>";
+            //} else {
+            //       return "<span></span>";
+            //}
+              return "<span>"+t+"</span>";
         }
 
 
