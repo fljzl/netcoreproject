@@ -1,5 +1,6 @@
 ﻿using Quartz;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Testjob2
@@ -17,7 +18,8 @@ namespace Testjob2
                 JobDataMap dataMap = context.MergedJobDataMap;  // Note the difference from the previous example
 
                 //string jobSays = dataMap.GetString("jobSays");
-                Console.WriteLine("key"+ key + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                Thread.Sleep(1000);
+                Console.WriteLine("key" + key + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
             });
         }
     }

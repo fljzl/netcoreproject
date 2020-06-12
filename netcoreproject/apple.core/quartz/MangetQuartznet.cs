@@ -86,6 +86,7 @@ namespace apple.core
                 await Scheduler.PauseTrigger(triggerKey);
                 await Scheduler.UnscheduleJob(triggerKey);
                 await Scheduler.DeleteJob(jobKey);
+
                 Console.WriteLine("当前job已经存在，无需调度:{0}", jobKey.ToString());
             }
 
