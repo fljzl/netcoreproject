@@ -20,6 +20,8 @@ namespace apple.test.quartz
         public void Log()
         {
 
+
+
             #region 测试dll
 
             MangerLog log = new MangerLog();
@@ -27,7 +29,7 @@ namespace apple.test.quartz
             MangerQuartznet manger = new MangerQuartznet();
             QuatzjobRepostory _quartzrepository = new QuatzjobRepostory();
             var job = _quartzrepository.FindById(4);
-            manger.RunJob(job);
+            var sd = manger.RunJob(job).Result;
 
             #endregion
         }

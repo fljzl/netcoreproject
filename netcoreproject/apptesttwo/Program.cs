@@ -31,7 +31,7 @@ namespace apptesttwo
             MangerQuartznet manger = new MangerQuartznet();
             QuatzjobRepostory _quartzrepository = new QuatzjobRepostory();
             var job = _quartzrepository.FindById(4);
-            manger.RunJob(job);
+            var sd = manger.RunJob(job).Result;
 
             Console.ReadKey();
         }

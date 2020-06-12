@@ -115,7 +115,7 @@ namespace apple.web.cms.quartz.Controllers
             var jobDetail = _operateJob(JobId);
             if (jobDetail != null)
             {
-                var flag = _quartzmanger.RunJob(jobDetail);
+                var flag = _quartzmanger.RunJob(jobDetail).Result;
                 return Json(new ExecutionResult() { IsSuccess = flag, Message = flag ? "成功" : "失败" });
             }
             else

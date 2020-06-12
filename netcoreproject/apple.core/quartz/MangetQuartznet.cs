@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 using apple.Infrastructure;
 using apple.model.quarzt;
 using Quartz;
@@ -16,6 +17,7 @@ namespace apple.core
         public MangerQuartznet()
         {
             Scheduler = ManagerScheduler.Instance.Scheduler;
+            Scheduler.Start();
         }
 
         public bool DeleteJob(Customer_JobInfo jobInfo)
@@ -73,7 +75,7 @@ namespace apple.core
         /// </summary>
         /// <param name="jobInfo"></param>
         /// <returns></returns>
-        public bool RunJob(Customer_JobInfo jobInfo)
+        public async Task<bool> RunJob(Customer_JobInfo jobInfo)
         {
             var jobKey = MangertKey.CreateJobKey(jobInfo.JobName, jobInfo.JobGroupName);
             var triggerKey = MangertKey.CreateTriggerKey(jobInfo.TriggerName, jobInfo.TriggerGroupName);
@@ -81,51 +83,51 @@ namespace apple.core
             if (flag)
             {
                 //////存在job,先删除
-                //Scheduler.PauseTrigger(triggerKey).Wait();
-                //Scheduler.UnscheduleJob(triggerKey).Wait();
-                //Scheduler.DeleteJob(jobKey).Wait();
-
+                await Scheduler.PauseTrigger(triggerKey);
+                await Scheduler.UnscheduleJob(triggerKey);
+                await Scheduler.DeleteJob(jobKey);
                 Console.WriteLine("当前job已经存在，无需调度:{0}", jobKey.ToString());
             }
-            flag = Scheduler.CheckExists(jobKey).Result;
-            if (!flag)
+
+            if (!string.IsNullOrWhiteSpace(jobInfo.DLLName))
             {
-                if (!string.IsNullOrWhiteSpace(jobInfo.DLLName))
-                {
-                    var jobdata = new JobDataMap() {
+                var jobdata = new JobDataMap() {
                         new KeyValuePair<string, object>(MangertKey.JobDataMapKeyJobId, jobInfo.JobId),
                         new KeyValuePair<string, object>("JobArgs", jobInfo.JobArgs),
                         new KeyValuePair<string, object>("RequestUrl", jobInfo.RequestUrl)
                    };
 
-                    //var type = GetClassInfo(jobInfo.DLLName, jobInfo.FullJobName);
-                    //IJobDetail jobDetail = JobBuilder.Create(type).WithIdentity(jobKey).UsingJobData(jobdata).RequestRecovery(false).Build();
+                //var type = GetClassInfo(jobInfo.DLLName, jobInfo.FullJobName);
+                //IJobDetail jobDetail = JobBuilder.Create(type).WithIdentity(jobKey).UsingJobData(jobdata).RequestRecovery(false).Build();
 
-                    //两种不同的写法结果不同
-                    IJobDetail jobDetail = JobBuilder.Create<TestJob2>()
-                        .WithIdentity(jobKey)
-                        .UsingJobData(jobdata)
-                        .RequestRecovery(false)
-                        //.StoreDurably()
-                        .WithDescription("使用quartz进行持久化存储")
-                        .Build();
+                //两种不同的写法结果不同
+                IJobDetail jobDetail = JobBuilder.Create<TestJob2>()
+                    .WithIdentity(jobKey)
+                    .UsingJobData(jobdata)
+                    .RequestRecovery(false)
+                    //.StoreDurably()
+                    .WithDescription("使用quartz进行持久化存储")
+                    .Build();
 
-                    CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.CronSchedule(jobInfo.Cron);
-                    ITrigger trigger = TriggerBuilder.Create()
-                     //.StartAt(DateTimeOffset.Now.AddYears(-1))
-                     .WithIdentity(jobInfo.TriggerName, jobInfo.TriggerGroupName)
-                     .ForJob(jobKey)
-                     //.WithSimpleSchedule(x => x.WithIntervalInSeconds(2).RepeatForever())
-                     //.WithSchedule(cronScheduleBuilder.WithMisfireHandlingInstructionDoNothing())
-                     .WithCronSchedule(jobInfo.Cron)
+                CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.CronSchedule(jobInfo.Cron);
+                ITrigger trigger = TriggerBuilder.Create()
+                  //.StartAt(DateTimeOffset.Now.AddYears(-1))
+                  .StartNow()
+                 .WithIdentity(jobInfo.TriggerName, jobInfo.TriggerGroupName)
+                 .ForJob(jobKey)
+                 //.WithSimpleSchedule(x => x.WithIntervalInSeconds(2).RepeatForever())
+                 //.WithSchedule(cronScheduleBuilder.WithMisfireHandlingInstructionDoNothing())
+                 .WithCronSchedule(jobInfo.Cron)
+                 .Build();
 
-                     .Build();
 
 
-                    Scheduler.Start().Wait();
-                    Scheduler.ScheduleJob(jobDetail, trigger).Wait();
-
+                if (!Scheduler.IsStarted)
+                {
+                    await Scheduler.Start();
                 }
+
+                await Scheduler.ScheduleJob(jobDetail, trigger);
             }
             return true;
         }
