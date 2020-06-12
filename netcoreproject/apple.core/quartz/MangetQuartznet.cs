@@ -80,34 +80,52 @@ namespace apple.core
             var flag = Scheduler.CheckExists(jobKey).Result;
             if (flag)
             {
-                ////存在job,先删除
-                Scheduler.PauseTrigger(triggerKey).Wait();
-                Scheduler.UnscheduleJob(triggerKey).Wait();
-                Scheduler.DeleteJob(jobKey).Wait();
-            }
+                //////存在job,先删除
+                //Scheduler.PauseTrigger(triggerKey).Wait();
+                //Scheduler.UnscheduleJob(triggerKey).Wait();
+                //Scheduler.DeleteJob(jobKey).Wait();
 
-            if (!string.IsNullOrWhiteSpace(jobInfo.DLLName))
+                Console.WriteLine("当前job已经存在，无需调度:{0}", jobKey.ToString());
+            }
+            flag = Scheduler.CheckExists(jobKey).Result;
+            if (!flag)
             {
-                var jobdata = new JobDataMap() {
+                if (!string.IsNullOrWhiteSpace(jobInfo.DLLName))
+                {
+                    var jobdata = new JobDataMap() {
                         new KeyValuePair<string, object>(MangertKey.JobDataMapKeyJobId, jobInfo.JobId),
                         new KeyValuePair<string, object>("JobArgs", jobInfo.JobArgs),
                         new KeyValuePair<string, object>("RequestUrl", jobInfo.RequestUrl)
                    };
 
-                var type = GetClassInfo(jobInfo.DLLName, jobInfo.FullJobName);
-                //IJobDetail jobDetail = JobBuilder.Create(type).WithIdentity(jobKey).UsingJobData(jobdata).RequestRecovery(true).Build();
+                    //var type = GetClassInfo(jobInfo.DLLName, jobInfo.FullJobName);
+                    //IJobDetail jobDetail = JobBuilder.Create(type).WithIdentity(jobKey).UsingJobData(jobdata).RequestRecovery(false).Build();
 
-                IJobDetail jobDetail = JobBuilder.Create<TestJob2>().WithIdentity(jobKey).UsingJobData(jobdata).RequestRecovery(true).Build();
+                    //两种不同的写法结果不同
+                    IJobDetail jobDetail = JobBuilder.Create<TestJob2>()
+                        .WithIdentity(jobKey)
+                        .UsingJobData(jobdata)
+                        .RequestRecovery(false)
+                        //.StoreDurably()
+                        .WithDescription("使用quartz进行持久化存储")
+                        .Build();
 
-                CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.CronSchedule(jobInfo.Cron);
-                ITrigger trigger = TriggerBuilder.Create()
-                 .StartAt(DateTimeOffset.Now.AddYears(-1))
-                 .WithIdentity(jobInfo.TriggerName, jobInfo.TriggerGroupName)
-                 .ForJob(jobKey)
-                 .WithSchedule(cronScheduleBuilder.WithMisfireHandlingInstructionDoNothing())
-                 .Build();
-                Scheduler.Start().Wait();
-                Scheduler.ScheduleJob(jobDetail, trigger).Wait();
+                    CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.CronSchedule(jobInfo.Cron);
+                    ITrigger trigger = TriggerBuilder.Create()
+                     //.StartAt(DateTimeOffset.Now.AddYears(-1))
+                     .WithIdentity(jobInfo.TriggerName, jobInfo.TriggerGroupName)
+                     .ForJob(jobKey)
+                     //.WithSimpleSchedule(x => x.WithIntervalInSeconds(2).RepeatForever())
+                     //.WithSchedule(cronScheduleBuilder.WithMisfireHandlingInstructionDoNothing())
+                     .WithCronSchedule(jobInfo.Cron)
+
+                     .Build();
+
+
+                    Scheduler.Start().Wait();
+                    Scheduler.ScheduleJob(jobDetail, trigger).Wait();
+
+                }
             }
             return true;
         }

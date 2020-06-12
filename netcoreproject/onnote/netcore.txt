@@ -1,10 +1,6 @@
-﻿E:\BertCode\test\02bin\netstandard2.0\Testjob2.dll
- Testjob2.TestJob2
+﻿
 
-E:\BertCode\test\01bin\netstandard2.0\TestJob1.dll
 
- TestJob1.TestJob
-etcore的项目部署到window系统上可以是iis，可以是window服务，那么对应到liunx操作系统的话，是不是就没有window服务的概念了
 
 定时任务：
 https://www.quartz-scheduler.net/documentation/quartz-3.x/tutorial/index.html
@@ -23,11 +19,9 @@ https://www.cnblogs.com/zhenyuyaodidiao/p/4755649.html
 https://www.bbsmax.com/A/LPdo8D48z3/
 
 
-服务和定时任务的绑定：
-https://github.com/alexandrnikitin/Topshelf.Autofac
 
 
-https://www.cnblogs.com/z415353144/p/12718890.html
+
 
 
 1.可以使用配置文件xml

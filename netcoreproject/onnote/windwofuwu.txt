@@ -1,5 +1,8 @@
 ﻿
 --- Topshelf 第一种方式
+https://github.com/alexandrnikitin/Topshelf.Autofac
+
+https://www.cnblogs.com/z415353144/p/12718890.html
 
 https://blog.csdn.net/qq_36664495/article/details/90600995
 
