@@ -74,10 +74,13 @@ namespace apple.core
         public bool RunJob(Customer_JobInfo jobInfo)
         {
             var jobKey = MangertKey.CreateJobKey(jobInfo.JobName, jobInfo.JobGroupName);
+            var triggerKey = MangertKey.CreateTriggerKey(jobInfo.TriggerName, jobInfo.TriggerGroupName);
             var flag = Scheduler.CheckExists(jobKey).Result;
             if (flag)
             {
-                //存在job,先删除
+                ////存在job,先删除
+                Scheduler.PauseTrigger(triggerKey).Wait();
+                Scheduler.UnscheduleJob(triggerKey).Wait();
                 Scheduler.DeleteJob(jobKey).Wait();
             }
 
@@ -99,7 +102,7 @@ namespace apple.core
                  .ForJob(jobKey)
                  .WithSchedule(cronScheduleBuilder.WithMisfireHandlingInstructionDoNothing())
                  .Build();
-                Scheduler.Start();
+                Scheduler.Start().Wait();
                 Scheduler.ScheduleJob(jobDetail, trigger).Wait();
             }
             return true;

@@ -1,0 +1,15 @@
+﻿
+--- Topshelf 第一种方式
+
+https://blog.csdn.net/qq_36664495/article/details/90600995
+
+https://www.cnblogs.com/itjeff/p/8316244.html
+
+---官网
+https://topshelf.readthedocs.io/en/latest/configuration/logging.html#log4net-integration
+注册
+TopshelfWindow.exe install 
+启动
+TopshelfWindow.exe start
+卸载
+TopshelfWindow.exe uninstall 

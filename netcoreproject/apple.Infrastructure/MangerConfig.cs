@@ -10,43 +10,53 @@ namespace apple.Infrastructure
 {
     public class MangerConfig
     {
-        public static IConfigurationRoot Configuration { get; }
-
-        static MangerConfig()
+        public IConfigurationRoot Configuration { get; }
+        bool _isweb = true;
+        public MangerConfig(bool isweb=true)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
+            var builder = new ConfigurationBuilder();
+            if (isweb)
+            {
+                builder.SetBasePath(Directory.GetCurrentDirectory())
               .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
             .AddEnvironmentVariables();
-
+            }
+            else
+            {
+                builder.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                  .AddEnvironmentVariables();
+            }
             Configuration = builder.Build();
             var one = Configuration.GetValue<List<ConfigQuartzCms>>("QuartzConfig:quartzs");
             Configuration.Bind("QuartzConfig:quartzs", quartzlist);
         }
-
+        public MangerConfig():this(false)
+        {
+           
+        }
         #region 要绑定的参数
 
 
 
-        public static string sqlserverquartz => Configuration.GetConnectionString("sqlserverquartz");
+        public string sqlserverquartz => Configuration.GetConnectionString("sqlserverquartz");
 
-        public static List<ConfigQuartzCms> quartzlist { get; } = new List<ConfigQuartzCms>();
+        public List<ConfigQuartzCms> quartzlist { get; } = new List<ConfigQuartzCms>();
 
-        public static bool IsUseproxy => ConvertBool("QuartzConfig:quartzaddress:IsUseproxy", "false");
+        public bool IsUseproxy => ConvertBool("QuartzConfig:quartzaddress:IsUseproxy", "false");
 
-        public static string localIp => ConvertString("QuartzConfig:quartzaddress:localIp", "");
+        public string localIp => ConvertString("QuartzConfig:quartzaddress:localIp", "");
 
-        public static string quartzlocalIp => Configuration["QuartzConfig:quartzaddress:localIp"];
-        public static string quartzchannelType => Configuration["QuartzConfig:quartzaddress:channelType"];
+        public string quartzlocalIp => Configuration["QuartzConfig:quartzaddress:localIp"];
+        public string quartzchannelType => Configuration["QuartzConfig:quartzaddress:channelType"];
 
-        public static string quartzport => Configuration["QuartzConfig:quartzaddress:port"];
+        public string quartzport => "520";// Configuration["QuartzConfig:quartzaddress:port"];
 
-        public static string quartzbindName => Configuration["QuartzConfig:quartzaddress:bindName"];
-
-
+        public string quartzbindName => Configuration["QuartzConfig:quartzaddress:bindName"];
 
 
-        public static string ConvertString(string key, string defaultvalue = "")
+
+
+        public string ConvertString(string key, string defaultvalue = "")
         {
             var value = Configuration[key];
             if (value.Length == 0 && !string.IsNullOrEmpty(defaultvalue))
@@ -54,12 +64,12 @@ namespace apple.Infrastructure
             return value.Trim();
         }
 
-        public static int ConvertInt(string key, string defaultvalue = "")
+        public int ConvertInt(string key, string defaultvalue = "")
         {
             return Convert.ToInt32(ConvertString(key, defaultvalue));
         }
 
-        public static bool ConvertBool(string key, string defaultvalue = "")
+        public bool ConvertBool(string key, string defaultvalue = "")
         {
             return Convert.ToBoolean(ConvertString(key, defaultvalue));
         }

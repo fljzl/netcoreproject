@@ -1,0 +1,109 @@
+﻿E:\BertCode\test\02bin\netstandard2.0\Testjob2.dll
+ Testjob2.TestJob2
+
+E:\BertCode\test\01bin\netstandard2.0\TestJob1.dll
+
+ TestJob1.TestJob
+etcore的项目部署到window系统上可以是iis，可以是window服务，那么对应到liunx操作系统的话，是不是就没有window服务的概念了
+
+定时任务：
+https://www.quartz-scheduler.net/documentation/quartz-3.x/tutorial/index.html
+
+经典：包括脚本和基本案例
+https://cloud.tencent.com/developer/article/1510811
+
+使用的使用要添加的引用
+
+Quartz.Serialization.Json 
+
+集群部署的原理（Quartz如何实现分布式的）
+https://www.cnblogs.com/zhenyuyaodidiao/p/4755649.html
+
+集群部署Demo
+https://www.bbsmax.com/A/LPdo8D48z3/
+
+
+服务和定时任务的绑定：
+https://github.com/alexandrnikitin/Topshelf.Autofac
+
+
+https://www.cnblogs.com/z415353144/p/12718890.html
+
+
+1.可以使用配置文件xml
+Quartz.Plugins
+为了支持xml方式进行quartz的job配置，首先我们需要引入该dll，具体nuget地址为：https://www.nuget.org/packages/Quartz.Plugins/
+quartz.plugin.xml.type = Quartz.Plugin.Xml.XMLSchedulingDataProcessorPlugin, Quartz.Plugins
+quartz.plugin.xml.fileNames = quartz_jobs.xml
+
+
+
+
+
+
+ 
+
+
+
+windwos服务寄宿netcore，这样不能使用域名访问，只能使用ip地址
+
+如果安装了iis，而且80端口被占用了，就不能使用绑定80端口了，"http://www.sqlme.com:80"就报错了，只能部署到iis上，
+
+https://www.cnblogs.com/cnDqf/p/12162850.html
+
+https://www.cnblogs.com/sunnytrudeau/p/9170360.html
+
+https://github.com/conanl5566/mydemo/tree/master/WebApplication24
+
+经测试可以使用：
+https://www.cnblogs.com/pingming/p/5108947.html
+
+
+
+cd E:\BertCode\corerenwu\corejob\WebApplication2\bin\Debug\netcoreapp3.1
+
+sc create “Memcached” binPath= “E:\memcached\memcached-amd64\memcached.exe -d runservice -p 11211” DisplayName= “Memcached” start=auto
+
+
+sc create "tuoguangtest" binpath= "E:\BertCode\corerenwu\corejob\WebApplication2\bin\Debug\netcoreapp3.1\WebApplication2.exe"
+
+sc create "tuoguangtest" binPath= "E:\BertCode\corerenwu\corejob\WebApplication2\bin\Debug\netcoreapp3.1\WebApplication2.exe"  
+sc create "tuoguangtest" binPath="E:\BertCode\corerenwu\corejob\WebApplication2\bin\Debug\netcoreapp3.1\WebApplication2.exe"
+
+ sc start MyService
+
+E:\BertCode\corerenwu\corejob\WebApplication2\bin\Debug\netcoreapp3.1\WebApplication2.exe
+
+
+
+也可以使用:
+
+    <PackageReference Include="Quartz" Version="3.0.5" />
+    <PackageReference Include="Quartz.Plugins" Version="3.0.5" />
+    <PackageReference Include="Topshelf" Version="4.2.1" />
+
+
+
+
+
+
+2.原理任务
+https://www.cnblogs.com/zhenyuyaodidiao/p/4755649.html
+
+
+
+
+热插拔：
+https://blog.csdn.net/kesshei/article/details/102826336
+
+
+
+
+netcore的控制器可以通过集成 contortbase,获取，httpcontentx的信息，比如ip地址，比如地点等等；
+  value.UserAgent = Request.Headers["User-Agent"];
+            var agent = new UserAgent(value.UserAgent);
+            value.Ip = HttpContext.Connection.RemoteIpAddress.ToIPv4String();
+            value.Browser = $"{agent.Browser?.Name} {agent.Browser?.Version}";
+            value.OS = $"{agent.OS?.Name} {agent.OS?.Version}";
+            value.City = ipLocator.Locate(value.Ip);
+            value.UserName = User.Identity.Name ?? string.Empty;

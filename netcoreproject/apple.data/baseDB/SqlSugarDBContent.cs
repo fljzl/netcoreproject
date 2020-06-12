@@ -17,7 +17,7 @@ namespace apple.data.baseDB
             Db = new SqlSugarClient(
                 new ConnectionConfig
                 {
-                    ConnectionString = MangerConfig.sqlserverquartz,
+                    ConnectionString = Singleton<MangerConfig>.Instance.sqlserverquartz,
                     DbType = DbType.SqlServer,
                     IsAutoCloseConnection = true,
                     InitKeyType = InitKeyType.SystemTable

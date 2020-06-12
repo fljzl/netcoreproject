@@ -1,0 +1,16 @@
+﻿ELK是Elasticsearch、Logstash、Kibana
+
+
+
+//GetXmlPeizhi(459,462,'查找,新增广告,修改,删除,启禁用')
+function GetXmlPeizhi(snum, ednum, text) {
+    var shtml = "";
+    for (var i = snum; i <= ednum; i++) {
+        shtml += '<Co' + i + ' value="' + text + '"/>';
+    }
+    console.log(shtml);
+}
+
+
+----网页语音
+https://developer.mozilla.org/zh-CN/docs/Web/API/AudioContext/createBufferSource

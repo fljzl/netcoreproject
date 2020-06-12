@@ -1,1 +1,52 @@
 ﻿
+ 
+
+
+('quartz.scheduler.instanceName', 'RemoteServer'),
+('quartz.threadPool.type', 'Quartz.Simpl.SimpleThreadPool, Quartz'),
+('quartz.threadPool.threadCount', '5'),
+('quartz.threadPool.threadPriority', 'Normal'),
+('quartz.scheduler.exporter.port', '555'),
+('quartz.scheduler.exporter.bindName', 'QuartzScheduler'),
+('quartz.scheduler.exporter.channelType', 'tcp'),
+('quartz.scheduler.exporter.channelName', 'httpQuartz'),
+('quartz.scheduler.exporter.rejectRemoteRequests', 'true'),
+('quartz.jobStore.clustered', 'true'),
+('quartz.jobStore.type', 'Quartz.Impl.AdoJobStore.JobStoreTX, Quartz'),
+('quartz.serializer.type', 'json'),
+('quartz.jobStore.tablePrefix', 'Qrtz_'),
+('quartz.jobStore.driverDelegateType', 'Quartz.Impl.AdoJobStore.SqlServerDelegate, Quartz'),
+('quartz.jobStore.dataSource', 'myDS'),
+('quartz.dataSource.myDS.connectionString', @'Data Source=.\sql2008r2,Initial Catalog=QuartzDemo2,User ID=sa,(Password=111111'),
+('quartz.dataSource.myDS.provider', 'SqlServer'),
+('quartz.scheduler.instanceId', 'AUTO')
+
+
+
+var properties = new NameValueCollection();
+properties["quartz.scheduler.instanceName"] = "RemoteServer";
+properties["quartz.threadPool.type"] = "Quartz.Simpl.SimpleThreadPool, Quartz";
+properties["quartz.threadPool.threadCount"] = "5";
+properties["quartz.threadPool.threadPriority"] = "Normal";
+//properties["quartz.scheduler.exporter.type"] = "Quartz.Simpl.RemotingSchedulerExporter, Quartz";
+properties["quartz.scheduler.exporter.port"] = "555";//端口号
+properties["quartz.scheduler.exporter.bindName"] = "QuartzScheduler";//名称
+properties["quartz.scheduler.exporter.channelType"] = "tcp";//通道类型
+properties["quartz.scheduler.exporter.channelName"] = "httpQuartz";
+properties["quartz.scheduler.exporter.rejectRemoteRequests"] = "true";
+properties["quartz.jobStore.clustered"] = "true";//集群配置
+                                                    //指定quartz持久化数据库的配置
+properties["quartz.jobStore.type"] = "Quartz.Impl.AdoJobStore.JobStoreTX, Quartz";//存储类型
+properties["quartz.serializer.type"] = "json";
+properties["quartz.jobStore.tablePrefix"] = "Qrtz_";//表名前缀
+properties["quartz.jobStore.driverDelegateType"] = "Quartz.Impl.AdoJobStore.SqlServerDelegate, Quartz";//驱动类型
+properties["quartz.jobStore.dataSource"] = "myDS";//数据源名称
+properties["quartz.dataSource.myDS.connectionString"] = @"Data Source=.\sql2008r2;Initial Catalog=QuartzDemo2;User ID=sa;Password=111111";//连接字符串
+properties["quartz.dataSource.myDS.provider"] = "SqlServer";//数据库版本
+properties["quartz.scheduler.instanceId"] = "AUTO";
+
+
+var schedulerFactory = new StdSchedulerFactory(properties);
+_scheduler = schedulerFactory.GetScheduler().Result;
+ConnectionCache[ip] = _scheduler;
+
