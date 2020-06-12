@@ -6,6 +6,8 @@ using System.Text;
 using apple.Infrastructure;
 using apple.model.quarzt;
 using Quartz;
+using Testjob2;
+
 namespace apple.core
 {
     public class MangerQuartznet : IDisposable
@@ -93,7 +95,9 @@ namespace apple.core
                    };
 
                 var type = GetClassInfo(jobInfo.DLLName, jobInfo.FullJobName);
-                IJobDetail jobDetail = JobBuilder.Create(type).WithIdentity(jobKey).UsingJobData(jobdata).RequestRecovery(true).Build();
+                //IJobDetail jobDetail = JobBuilder.Create(type).WithIdentity(jobKey).UsingJobData(jobdata).RequestRecovery(true).Build();
+
+                IJobDetail jobDetail = JobBuilder.Create<TestJob2>().WithIdentity(jobKey).UsingJobData(jobdata).RequestRecovery(true).Build();
 
                 CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.CronSchedule(jobInfo.Cron);
                 ITrigger trigger = TriggerBuilder.Create()

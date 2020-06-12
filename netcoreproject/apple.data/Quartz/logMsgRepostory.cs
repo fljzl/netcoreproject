@@ -16,6 +16,7 @@ namespace apple.data.Quartz
         /// <returns></returns>
         public bool Insert(logMsg model)
         {
+            model.CreateTime = DateTime.Now;
             return logMsg.Insert(model);
         }
 
