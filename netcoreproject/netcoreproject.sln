@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebService", "WebService\We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkerService", "WorkerService\WorkerService.csproj", "{C1AD2017-060A-4E53-A3A5-34A59527319B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "logtest", "logtest\logtest.csproj", "{37D04AA5-1FDD-46F0-A52B-D469F08E5B57}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +109,10 @@ Global
 		{C1AD2017-060A-4E53-A3A5-34A59527319B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1AD2017-060A-4E53-A3A5-34A59527319B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1AD2017-060A-4E53-A3A5-34A59527319B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37D04AA5-1FDD-46F0-A52B-D469F08E5B57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37D04AA5-1FDD-46F0-A52B-D469F08E5B57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37D04AA5-1FDD-46F0-A52B-D469F08E5B57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37D04AA5-1FDD-46F0-A52B-D469F08E5B57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -126,6 +132,7 @@ Global
 		{BB728341-45A9-4027-8A16-A76EDAC3E7A5} = {97037B3D-3463-4D46-B58F-C3EC694DD2CE}
 		{4C57235A-BA31-40C0-8E5C-94A8EA9270C3} = {97037B3D-3463-4D46-B58F-C3EC694DD2CE}
 		{C1AD2017-060A-4E53-A3A5-34A59527319B} = {97037B3D-3463-4D46-B58F-C3EC694DD2CE}
+		{37D04AA5-1FDD-46F0-A52B-D469F08E5B57} = {0A8E8C63-E1F4-4D4B-924C-8BA314995A6A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {64551657-2B03-4A42-A722-FEED6E2AB5C4}

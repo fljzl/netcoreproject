@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace apple.web.cms.quartz
+namespace logtest
 {
     public class Program
     {
@@ -21,7 +21,6 @@ namespace apple.web.cms.quartz
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                   
                 });
     }
 }
