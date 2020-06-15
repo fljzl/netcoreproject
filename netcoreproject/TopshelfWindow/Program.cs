@@ -15,9 +15,9 @@ namespace TopshelfWindow
             HostFactory.Run(x =>
             {
                 x.Service<TraderService>();
-                x.SetDescription("11TopshelfWindowSetDescription");
-                x.SetDisplayName("11TopshelfWindowSetDisplayName");
-                x.SetServiceName("11TopshelfWindowSetServiceName");
+                x.SetDescription("0desc");
+                x.SetDisplayName("0quartznet");
+                x.SetServiceName("0quartznetName");
                 x.RunAsLocalService();
                 x.OnException(ex =>
                 {

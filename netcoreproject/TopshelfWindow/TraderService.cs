@@ -40,7 +40,4 @@ namespace TopshelfWindow
             return true;
         }
     }
-
-
-
 }

@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.Loader;
 using System.Text;
 using System.Threading.Tasks;
 using apple.Infrastructure;
@@ -98,17 +99,23 @@ namespace apple.core
                         new KeyValuePair<string, object>("RequestUrl", jobInfo.RequestUrl)
                    };
 
-                //var type = GetClassInfo(jobInfo.DLLName, jobInfo.FullJobName);
-                //IJobDetail jobDetail = JobBuilder.Create(type).WithIdentity(jobKey).UsingJobData(jobdata).RequestRecovery(false).Build();
-
-                //两种不同的写法结果不同
-                IJobDetail jobDetail = JobBuilder.Create<TestJob2>()
+                var type = GetClassInfo(jobInfo.DLLName, jobInfo.FullJobName);
+                IJobDetail jobDetail = JobBuilder.Create(type)  
                     .WithIdentity(jobKey)
                     .UsingJobData(jobdata)
                     .RequestRecovery(false)
-                    //.StoreDurably()
+                    .StoreDurably()
                     .WithDescription("使用quartz进行持久化存储")
                     .Build();
+
+                ////两种不同的写法结果不同
+                //IJobDetail jobDetail = JobBuilder.Create<TestJob2>()
+                //    .WithIdentity(jobKey)
+                //    .UsingJobData(jobdata)
+                //    .RequestRecovery(false)
+                //    //.StoreDurably()
+                //    .WithDescription("使用quartz进行持久化存储")
+                //    .Build();
 
                 CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.CronSchedule(jobInfo.Cron);
                 ITrigger trigger = TriggerBuilder.Create()
@@ -144,7 +151,11 @@ namespace apple.core
             Type type = null;
             try
             {
-                Assembly assembly = Assembly.LoadFrom(assemblyNamePath.Trim());
+                //Assembly assembly = Assembly.LoadFrom(assemblyNamePath.Trim());
+                //type = assembly.GetType(className.Trim(), true, true);
+
+                //从AppDomain迁移到AssemblyLoadContext
+                var assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(assemblyNamePath.Trim());
                 type = assembly.GetType(className.Trim(), true, true);
             }
             catch (Exception ex)
